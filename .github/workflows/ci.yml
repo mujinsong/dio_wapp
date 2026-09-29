@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: isolated-ci-only
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -pisolated-ci-only"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: server/go.mod
+          cache-dependency-path: server/go.sum
+
+      - name: Test backend
+        working-directory: server
+        run: go test ./... -count=1
+
+      - name: Detect data races
+        working-directory: server
+        run: go test -race ./internal/middleware ./internal/migration ./internal/response ./internal/service -count=1
+
+      - name: Verify real MySQL concurrency
+        working-directory: server
+        env:
+          TEST_MYSQL_DSN: root:isolated-ci-only@tcp(127.0.0.1:3306)/?parseTime=true
+        run: go test -race ./internal/service -run TestMySQL -count=3 -timeout=3m
+
+      - name: Vet and build backend
+        working-directory: server
+        run: |
+          go vet ./...
+          go build -o /tmp/dio-wapp-api ./cmd/api
+
+      - name: Scan reachable Go vulnerabilities
+        working-directory: server
+        run: go run golang.org/x/vuln/cmd/govulncheck@v1.7.0 ./...
+
+      - name: Validate miniprogram sources
+        run: |
+          node --test tests/miniprogram/*.test.js
+          find miniprogram -name '*.js' -print0 | xargs -0 -n1 node --check
+          find miniprogram -name '*.json' -print0 | xargs -0 -n1 jq empty
+
+      - name: Validate deployment files
+        run: |
+          sh -n deploy/backup.sh
+          sh -n deploy/restore-check.sh
+          ruby -e "require 'yaml'; Dir['deploy/*.{yml,yaml}'].each { |file| YAML.load_file(file) }"
+          git diff --check

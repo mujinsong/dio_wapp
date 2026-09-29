@@ -1,0 +1,24 @@
+<view class="page profile-page">
+  <view class="profile-card">
+    <view class="avatar-ring">
+      <view class="avatar">{{user.avatar_text}}</view>
+    </view>
+    <view class="profile-name">{{user.nickname_display}}</view>
+    <view class="profile-subtitle">会员账户</view>
+    <view class="point-strip">
+      <text class="point-label">当前积分</text>
+      <text class="point-value">{{user.points_balance_display}}</text>
+    </view>
+  </view>
+
+  <view class="info-list">
+    <view class="row">
+      <text class="key">用户编号</text>
+      <text class="value">NO. {{user.member_no}}</text>
+    </view>
+    <view class="row">
+      <text class="key">账户状态</text>
+      <text class="value">{{user.status_text}}</text>
+    </view>
+  </view>
+</view>

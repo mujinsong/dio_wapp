@@ -1,0 +1,31 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/profile/profile",
+    "pages/shop/shop",
+    "pages/goods-detail/goods-detail",
+    "pages/exchange-orders/exchange-orders",
+    "pages/exchange-order-detail/exchange-order-detail",
+    "pages/point-ledgers/point-ledgers",
+    "pages/admin-goods/admin-goods",
+    "pages/admin-staff/admin-staff",
+    "pages/admin-points/admin-points",
+    "pages/admin-report/admin-report",
+	"pages/admin-operations/admin-operations",
+    "pages/staff-goods/staff-goods",
+    "pages/identity-qr/identity-qr",
+    "pages/staff-add-points/staff-add-points",
+	"pages/staff-workbench/staff-workbench",
+	"pages/point-corrections/point-corrections",
+	"pages/point-grant-approvals/point-grant-approvals",
+    "pages/staff-redeem-order/staff-redeem-order"
+  ],
+  "window": {
+    "navigationBarTitleText": "DIO 积分",
+    "navigationBarBackgroundColor": "#111827",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f7fb"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

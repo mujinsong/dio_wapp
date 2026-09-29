@@ -1,0 +1,122 @@
+<view class="page staff-page">
+  <view class="header">
+    <view>
+      <view class="eyebrow">STAFF</view>
+      <view class="title">现场加积分</view>
+    </view>
+    <button class="scan-button" bindtap="scanCode">
+      <text class="scan-corner corner-a"></text>
+      <text class="scan-corner corner-b"></text>
+      <text class="scan-corner corner-c"></text>
+      <text class="scan-corner corner-d"></text>
+    </button>
+  </view>
+
+  <view wx:if="{{!hasStaffGroups}}" class="empty-panel">
+    当前账号没有员工团体权限
+  </view>
+
+  <view wx:else class="form-panel">
+    <view class="field">
+      <view class="label">所属团体</view>
+      <picker mode="selector" range="{{staffGroups}}" range-key="group_name" value="{{groupIndex}}" bindchange="handleGroupChange">
+        <view class="picker-value">
+          <text>{{selectedGroupLabel}}</text>
+          <text class="chevron">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="field">
+      <view class="label">用户二维码</view>
+      <view class="scan-row">
+        <input class="input token-input" value="{{rawScanText}}" maxlength="128" placeholder="扫码后自动填入" bindinput="handleTokenInput" />
+        <button class="small-button" bindtap="scanCode">扫码</button>
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="label">积分方式</view>
+      <view class="mode-switch">
+        <view class="mode-option {{pointMode === 'quick' ? 'active' : ''}}" data-mode="quick" bindtap="handleModeChange">
+          购券快速积分
+        </view>
+        <view class="mode-option {{pointMode === 'manual' ? 'active' : ''}}" data-mode="manual" bindtap="handleModeChange">
+          手动输入积分
+        </view>
+      </view>
+    </view>
+
+    <block wx:if="{{pointMode === 'quick'}}">
+      <view class="quick-fields">
+        <view class="field quick-field">
+          <view class="label">单张面额（元）</view>
+          <input class="input point-input" type="number" maxlength="6" value="{{ticketPrice}}" placeholder="例如 60" bindinput="handleTicketPriceInput" />
+        </view>
+        <view class="field quick-field">
+          <view class="label">购买张数</view>
+          <input class="input point-input" type="number" maxlength="6" value="{{ticketCount}}" placeholder="例如 2" bindinput="handleTicketCountInput" />
+        </view>
+      </view>
+
+      <view class="quick-total {{quickPoints > 0 ? 'ready' : ''}}">
+        <view>
+          <view class="quick-total-label">本次应加积分</view>
+          <view class="quick-formula" wx:if="{{quickPoints > 0}}">{{ticketPrice}} 元 × {{ticketCount}} 张</view>
+          <view class="quick-formula" wx:else>填写面额和张数后自动计算</view>
+        </view>
+        <view class="quick-total-value">{{quickPoints > 0 ? quickPoints : '--'}}</view>
+      </view>
+
+      <view class="field payment-field">
+        <view class="label">收款方式</view>
+        <picker mode="selector" range="{{paymentMethods}}" range-key="label" value="{{paymentMethodIndex}}" bindchange="handlePaymentMethodChange">
+          <view class="picker-value">
+            <text>{{selectedPaymentMethodLabel}}</text>
+            <text class="chevron">›</text>
+          </view>
+        </picker>
+      </view>
+    </block>
+
+    <view wx:else class="field">
+      <view class="label">增加积分</view>
+      <input class="input point-input" type="number" maxlength="6" value="{{pointValue}}" placeholder="例如 10" bindinput="handlePointInput" />
+    </view>
+
+    <view class="field">
+      <view class="label">备注</view>
+      <textarea class="textarea" value="{{remark}}" maxlength="400" placeholder="{{pointMode === 'quick' ? '可选，购券金额和张数会自动记录' : '例如 7月现场消费 / 入场奖励'}}" bindinput="handleRemarkInput"></textarea>
+    </view>
+
+    <button class="primary-button submit-button" loading="{{loading}}" bindtap="submit">
+      确认加积分
+    </button>
+  </view>
+
+  <view wx:if="{{result}}" class="result-panel">
+	<view class="result-title">{{result.pending_approval ? '已提交积分审批' : '已加积分'}}</view>
+	<view class="result-line">
+	  <text>本次积分</text>
+	  <text>{{result.delta_points}}</text>
+	</view>
+	<view wx:if="{{result.sale_no}}" class="result-line">
+	  <text>销售单号</text>
+	  <text>{{result.sale_no}}</text>
+	</view>
+	<view wx:if="{{result.pending_approval}}" class="result-line pending-line">
+	  <text>当前状态</text>
+	  <text>待团队负责人审批</text>
+	</view>
+    <view wx:if="{{!result.pending_approval}}" class="result-line">
+      <text>变动前</text>
+      <text>{{result.before_points}}</text>
+    </view>
+	<view wx:if="{{!result.pending_approval}}" class="result-line">
+      <text>变动后</text>
+      <text>{{result.after_points}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+</view>

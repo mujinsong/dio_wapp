@@ -1,0 +1,408 @@
+.workbench-page {
+  padding-bottom: 64rpx;
+}
+
+.page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.page-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.page-subtitle {
+  margin-top: 8rpx;
+  color: #667085;
+  font-size: 24rpx;
+}
+
+.group-picker {
+  color: #167c76;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.toolbar-band {
+  display: flex;
+  margin-top: 24rpx;
+  padding: 16rpx;
+  align-items: center;
+  gap: 12rpx;
+  border: 1rpx solid #dfe5ee;
+  border-radius: 8rpx;
+  background: #ffffff;
+}
+
+.date-control {
+  min-width: 250rpx;
+  height: 68rpx;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  border-radius: 6rpx;
+  background: #f1f4f8;
+  color: #172033;
+  font-size: 26rpx;
+  line-height: 68rpx;
+}
+
+.refresh-control {
+  width: 116rpx;
+  height: 68rpx;
+  margin: 0 0 0 auto;
+  padding: 0;
+  border-radius: 6rpx;
+  background: #111827;
+  color: #ffffff;
+  font-size: 25rpx;
+  line-height: 68rpx;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16rpx;
+  margin-top: 20rpx;
+}
+
+.quick-button {
+  display: flex;
+  height: 78rpx;
+  margin: 0;
+  padding: 0 22rpx;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  border-radius: 8rpx;
+  font-size: 27rpx;
+  font-weight: 600;
+  line-height: 78rpx;
+}
+
+.quick-button.add {
+  background: #167c76;
+  color: #ffffff;
+}
+
+.quick-button.redeem {
+  background: #e9eef5;
+  color: #172033;
+}
+
+.quick-symbol {
+  font-size: 34rpx;
+  font-weight: 500;
+}
+
+.quota-band {
+  margin-top: 20rpx;
+  padding: 24rpx;
+  border: 1rpx solid #d9e7e5;
+  border-radius: 8rpx;
+  background: #eef8f6;
+}
+
+.quota-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.quota-label,
+.quota-used {
+  display: block;
+}
+
+.quota-label {
+  color: #172033;
+  font-size: 27rpx;
+  font-weight: 650;
+}
+
+.quota-used {
+  margin-top: 5rpx;
+  color: #667085;
+  font-size: 21rpx;
+}
+
+.quota-remaining {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: #167c76;
+}
+
+.quota-remaining text:first-child {
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.quota-remaining text:last-child {
+  font-size: 20rpx;
+}
+
+.quota-track {
+  height: 12rpx;
+  margin-top: 20rpx;
+  overflow: hidden;
+  border-radius: 6rpx;
+  background: #d2e5e2;
+}
+
+.quota-progress {
+  height: 100%;
+  border-radius: 6rpx;
+  background: #167c76;
+}
+
+.section-title {
+  margin: 34rpx 0 15rpx;
+  font-size: 29rpx;
+  font-weight: 700;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rpx;
+  overflow: hidden;
+  border: 1rpx solid #dfe5ee;
+  border-radius: 8rpx;
+  background: #dfe5ee;
+}
+
+.metric-item {
+  display: flex;
+  min-width: 0;
+  min-height: 126rpx;
+  padding: 22rpx;
+  box-sizing: border-box;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+.metric-label,
+.metric-note {
+  color: #667085;
+  font-size: 22rpx;
+}
+
+.metric-value {
+  margin-top: 7rpx;
+  color: #172033;
+  font-size: 33rpx;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.metric-value.pending {
+  color: #a96913;
+}
+
+.metric-note {
+  margin-top: 3rpx;
+}
+
+.payment-list,
+.record-list {
+  overflow: hidden;
+  border: 1rpx solid #dfe5ee;
+  border-radius: 8rpx;
+  background: #ffffff;
+}
+
+.payment-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 100rpx 150rpx;
+  padding: 22rpx 24rpx;
+  gap: 12rpx;
+  border-bottom: 1rpx solid #edf0f5;
+  color: #596579;
+  font-size: 24rpx;
+}
+
+.payment-row:last-child,
+.record-row:last-child {
+  border-bottom: 0;
+}
+
+.payment-amount {
+  color: #172033;
+  font-weight: 650;
+  text-align: right;
+}
+
+.record-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.tab-control {
+  display: flex;
+  margin-bottom: 10rpx;
+  padding: 4rpx;
+  border-radius: 6rpx;
+  background: #e9eef5;
+}
+
+.tab-option {
+  height: 54rpx;
+  margin: 0;
+  padding: 0 18rpx;
+  border-radius: 4rpx;
+  background: transparent;
+  color: #667085;
+  font-size: 22rpx;
+  line-height: 54rpx;
+}
+
+.tab-option.active {
+  background: #ffffff;
+  color: #172033;
+  font-weight: 600;
+}
+
+.record-row {
+  display: grid;
+  grid-template-columns: 76rpx minmax(0, 1fr) 116rpx;
+  padding: 23rpx 20rpx;
+  gap: 14rpx;
+  border-bottom: 1rpx solid #edf0f5;
+}
+
+.record-time {
+  color: #7a8497;
+  font-size: 22rpx;
+}
+
+.record-main {
+  min-width: 0;
+}
+
+.record-title {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10rpx;
+  color: #172033;
+  font-size: 25rpx;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.record-status {
+  flex: 0 0 auto;
+  padding: 3rpx 8rpx;
+  border-radius: 4rpx;
+  background: #e7f4f1;
+  color: #167c76;
+  font-size: 18rpx;
+  font-weight: 500;
+}
+
+.record-status.pending {
+  background: #fff3df;
+  color: #9a620e;
+}
+
+.record-status.rejected {
+  background: #fdeaea;
+  color: #b13d3d;
+}
+
+.record-meta,
+.record-note {
+  margin-top: 6rpx;
+  color: #7a8497;
+  font-size: 20rpx;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.record-note {
+  color: #9a620e;
+}
+
+.correction-state {
+  margin-top: 8rpx;
+  color: #9a620e;
+  font-size: 20rpx;
+}
+
+.correction-button {
+  width: 140rpx;
+  height: 54rpx;
+  margin: 10rpx 0 0;
+  padding: 0;
+  border: 1rpx solid #e3bcbc;
+  border-radius: 5rpx;
+  background: #fff5f5;
+  color: #9f3434;
+  font-size: 21rpx;
+  line-height: 52rpx;
+}
+
+.record-number {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-end;
+  color: #167c76;
+  font-size: 25rpx;
+  font-weight: 700;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.record-number text:last-child {
+  margin-top: 4rpx;
+  color: #667085;
+  font-size: 20rpx;
+  font-weight: 400;
+}
+
+.redeem-number {
+  color: #3978b8;
+  font-size: 22rpx;
+}
+
+.empty-band,
+.error-band {
+  padding: 30rpx 22rpx;
+  border: 1rpx solid #dfe5ee;
+  border-radius: 8rpx;
+  background: #ffffff;
+  color: #7a8497;
+  font-size: 24rpx;
+  text-align: center;
+}
+
+.error-band {
+  margin-top: 22rpx;
+  border-color: #f2caca;
+  background: #fff2f2;
+  color: #aa3434;
+}
+
+@media (max-width: 360px) {
+  .record-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .tab-control {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .tab-option {
+    flex: 1;
+  }
+}

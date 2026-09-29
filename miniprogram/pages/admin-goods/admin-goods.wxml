@@ -1,0 +1,245 @@
+<view class="page admin-goods-page">
+  <view class="admin-head">
+    <view>
+      <view class="eyebrow">ADMIN</view>
+      <view class="title">团体与商品</view>
+    </view>
+    <button class="refresh-button" loading="{{loading}}" bindtap="loadAdmin">
+      <text>↻</text>
+    </button>
+  </view>
+
+  <view wx:if="{{!hasAdminAgencies}}" class="empty-panel">
+    当前账号没有管理员权限
+  </view>
+
+  <view wx:else>
+	<view class="agency-panel">
+	  <view class="label">当前事务所</view>
+	  <view class="picker-value">
+		<text>{{selectedAgencyLabel}}</text>
+	  </view>
+	</view>
+
+    <view class="section-heading approval-heading">
+      <view>
+        <view class="section-title">商品审批</view>
+        <view class="section-note">查看待办和历史审批记录</view>
+      </view>
+      <view wx:if="{{pendingApprovalCount}}" class="approval-count">{{pendingApprovalCount}}</view>
+    </view>
+
+    <view class="approval-tabs">
+      <button wx:for="{{approvalTabs}}" wx:key="value" class="{{item.tab_class}}" data-status="{{item.value}}" bindtap="handleApprovalFilter">
+        <text>{{item.label}}</text>
+        <text class="approval-tab-count">{{item.count}}</text>
+      </button>
+    </view>
+
+    <view wx:if="{{!hasApprovalRequests}}" class="empty-panel small-empty approval-empty">{{approvalEmptyText}}</view>
+    <view wx:else class="approval-list">
+      <view wx:for="{{approvalRequests}}" wx:key="id" class="approval-row">
+        <view class="approval-top">
+          <view class="approval-title-wrap">
+            <text class="approval-action">{{item.action_text}}</text>
+            <text class="approval-name">{{item.goods_name_text}}</text>
+          </view>
+          <text class="{{item.request_status_class}}">{{item.request_status_text}}</text>
+        </view>
+        <view class="approval-meta">{{item.group_name}} · {{item.price_text}} · {{item.schedule_text}} · 目标状态 {{item.target_status_text}} · 申请 #{{item.id}}</view>
+        <view wx:if="{{item.description}}" class="approval-description">{{item.description}}</view>
+
+        <view class="approval-timeline">
+          <view class="timeline-row">
+            <view class="timeline-rail">
+              <view class="timeline-dot"></view>
+              <view wx:if="{{item.reviewed_at}}" class="timeline-line"></view>
+            </view>
+            <view class="timeline-content">
+              <view class="timeline-title">工作人员提交申请</view>
+              <view class="timeline-meta">{{item.created_text}} · 工作人员 #{{item.submitted_by}}</view>
+            </view>
+          </view>
+          <view wx:if="{{item.reviewed_at}}" class="timeline-row">
+            <view class="timeline-rail"><view class="timeline-dot result-dot"></view></view>
+            <view class="timeline-content">
+              <view class="timeline-title">管理员{{item.request_status_text}}</view>
+              <view class="timeline-meta">{{item.reviewed_text}} · 管理员 #{{item.reviewed_by}}</view>
+              <view wx:if="{{item.review_remark}}" class="timeline-remark">{{item.review_remark}}</view>
+            </view>
+          </view>
+        </view>
+
+        <view wx:if="{{item.request_status == 'pending'}}" class="approval-actions">
+          <view class="approval-button reject-approval {{reviewingRequestId == item.id ? 'disabled' : ''}}" data-id="{{item.id}}" bindtap="rejectGoodsRequest">{{reviewingRequestId == item.id ? '处理中' : '驳回'}}</view>
+          <view class="approval-button approve-approval {{reviewingRequestId == item.id ? 'disabled' : ''}}" data-id="{{item.id}}" bindtap="approveGoodsRequest">{{reviewingRequestId == item.id ? '处理中' : '批准'}}</view>
+        </view>
+      </view>
+    </view>
+    <button wx:if="{{approvalHasMore || approvalLoadingMore}}" class="approval-load-button" loading="{{approvalLoadingMore}}" disabled="{{approvalLoadingMore}}" bindtap="loadMoreApprovalRequests">{{approvalLoadingMore ? '正在加载' : '加载更多审批记录'}}</button>
+
+    <view class="section-heading">
+      <view>
+        <view class="section-title">团体管理</view>
+        <view class="section-note">商品、工作人员和积分记录都归属于团体</view>
+      </view>
+    </view>
+
+    <view class="form-panel group-form-panel">
+      <view class="field two-cols group-name-row">
+        <view>
+          <view class="label">团体名称</view>
+          <input class="input" value="{{groupForm.name}}" data-group-field="name" placeholder="例如 星屑少女" bindinput="handleGroupInput" />
+        </view>
+        <view>
+          <view class="label">排序</view>
+          <input class="input" type="number" value="{{groupForm.sort}}" data-group-field="sort" placeholder="0" bindinput="handleGroupInput" />
+        </view>
+      </view>
+      <view class="field">
+        <view class="label">团体说明</view>
+        <input class="input" value="{{groupForm.description}}" data-group-field="description" placeholder="可填写风格或简介" bindinput="handleGroupInput" />
+      </view>
+      <view class="form-actions">
+        <view class="form-action reset-action" bindtap="resetGroupForm">清空</view>
+        <view class="form-action save-action {{groupSaving ? 'disabled' : ''}}" bindtap="submitGroup">{{groupSaving ? '保存中' : groupSubmitTitle}}</view>
+      </view>
+    </view>
+
+    <view wx:if="{{!hasGroups}}" class="empty-panel small-empty">还没有团体，请先新增</view>
+    <view wx:else class="group-list">
+      <view wx:for="{{groups}}" wx:key="id" class="group-row">
+        <view class="group-mark">{{item.initial}}</view>
+        <view class="group-info">
+          <view class="group-top">
+            <text class="group-row-name">{{item.name}}</text>
+            <text class="{{item.status_class}}">{{item.status_text}}</text>
+          </view>
+          <view class="group-description">{{item.description_text}}</view>
+        </view>
+        <view class="row-actions">
+          <view class="row-button edit-button" data-id="{{item.id}}" bindtap="editGroup">编辑</view>
+          <view class="row-button state-button" data-id="{{item.id}}" bindtap="toggleGroup">{{item.action_text}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section-heading product-heading">
+      <view>
+        <view class="section-title">商品管理</view>
+        <view class="section-note">每件商品必须选择一个已启用团体</view>
+      </view>
+    </view>
+
+    <view wx:if="{{!hasProductGroups}}" class="empty-panel small-empty">请先新增或启用一个团体</view>
+
+    <view wx:else class="form-panel">
+      <view class="field">
+        <view class="label">所属团体</view>
+        <picker mode="selector" range="{{productGroups}}" range-key="name" value="{{groupIndex}}" bindchange="handleGroupChange">
+          <view class="picker-value">
+            <text>{{selectedGroupLabel}}</text>
+            <text class="chevron">›</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="field">
+        <view class="label">商品名称</view>
+        <input class="input" value="{{form.name}}" data-field="name" placeholder="例如 现场拍立得券" bindinput="handleInput" />
+      </view>
+
+      <view class="field two-cols">
+        <view>
+          <view class="label">积分价格</view>
+          <input class="input" type="number" value="{{form.price_points}}" data-field="price_points" placeholder="30" bindinput="handleInput" />
+        </view>
+        <view>
+          <view class="label">库存</view>
+          <input class="input" type="number" value="{{form.stock}}" data-field="stock" placeholder="20" bindinput="handleInput" />
+        </view>
+      </view>
+
+      <view wx:if="{{form.status == 'on_sale'}}" class="field schedule-field">
+        <view class="schedule-row">
+          <view class="schedule-copy">
+            <view class="label">定时上架</view>
+            <view class="schedule-note">关闭时保存后立即上架</view>
+          </view>
+          <switch checked="{{form.schedule_enabled}}" color="#207f79" bindchange="handleScheduleToggle" />
+        </view>
+        <view wx:if="{{form.schedule_enabled}}" class="schedule-pickers">
+          <picker mode="date" value="{{form.sale_start_date}}" bindchange="handleSaleDate">
+            <view class="picker-value schedule-picker"><text>{{form.sale_start_date}}</text><text class="chevron">›</text></view>
+          </picker>
+          <picker mode="time" value="{{form.sale_start_time}}" bindchange="handleSaleTime">
+            <view class="picker-value schedule-picker"><text>{{form.sale_start_time}}</text><text class="chevron">›</text></view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="field two-cols">
+        <view>
+          <view class="label">每人限购数量</view>
+          <input class="input" type="number" value="{{form.purchase_limit_per_user}}" data-field="purchase_limit_per_user" placeholder="0 不限购" bindinput="handleInput" />
+        </view>
+        <view>
+          <view class="label">限购时长（小时）</view>
+          <input class="input" type="number" value="{{form.purchase_limit_hours}}" data-field="purchase_limit_hours" placeholder="例如 2" bindinput="handleInput" />
+        </view>
+      </view>
+
+      <view class="field two-cols">
+        <view>
+          <view class="label">状态</view>
+          <picker mode="selector" range="{{statusOptions}}" range-key="label" value="{{statusIndex}}" bindchange="handleStatusChange">
+            <view class="picker-value">
+              <text>{{selectedStatusLabel}}</text>
+              <text class="chevron">›</text>
+            </view>
+          </picker>
+        </view>
+        <view>
+          <view class="label">排序</view>
+          <input class="input" type="number" value="{{form.sort}}" data-field="sort" placeholder="0" bindinput="handleInput" />
+        </view>
+      </view>
+
+      <view class="field">
+        <view class="label">图片 URL</view>
+        <input class="input" value="{{form.image_url}}" data-field="image_url" placeholder="可不填" bindinput="handleInput" />
+      </view>
+
+      <view class="field">
+        <view class="label">兑换说明</view>
+        <textarea class="textarea" value="{{form.description}}" data-field="description" placeholder="领取方式、使用时间等" bindinput="handleInput"></textarea>
+      </view>
+
+      <view class="form-actions">
+        <view class="form-action reset-action" bindtap="resetForm">清空</view>
+        <view class="form-action save-action {{saving ? 'disabled' : ''}}" bindtap="submit">{{saving ? '保存中' : submitTitle}}</view>
+      </view>
+    </view>
+
+    <view class="list-title">商品列表</view>
+    <view wx:if="{{!hasGoods}}" class="empty-panel small-empty">暂无商品</view>
+    <view wx:else class="goods-list">
+      <view wx:for="{{goods}}" wx:key="id" class="goods-row">
+        <view class="goods-mark">{{item.initial}}</view>
+        <view class="goods-info">
+          <view class="goods-top">
+            <text class="goods-name">{{item.name}}</text>
+            <text class="status-tag">{{item.status_text}}</text>
+          </view>
+          <view class="goods-meta">{{item.group_name}} · {{item.price_text}} · {{item.stock_text}} · {{item.limit_text}} · {{item.sale_time_text}}</view>
+        </view>
+        <view class="row-actions">
+          <view class="row-button edit-button" data-id="{{item.id}}" bindtap="editGoods">编辑</view>
+          <view class="row-button delete-button" data-id="{{item.id}}" bindtap="deleteGoods">删除</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+</view>

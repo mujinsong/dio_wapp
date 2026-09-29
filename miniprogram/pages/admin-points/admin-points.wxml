@@ -1,0 +1,65 @@
+<view class="page admin-points-page">
+  <view class="page-head">
+    <view>
+      <view class="page-title">积分纠错</view>
+      <view class="page-subtitle">按会员编号核对账户后执行调整</view>
+    </view>
+    <picker wx:if="{{agencies.length > 1}}" disabled="{{saving || confirming}}" mode="selector" range="{{agencies}}" range-key="agency_name" value="{{agencyIndex}}" bindchange="handleAgencyChange">
+      <view class="agency-picker">{{agencyName}}</view>
+    </picker>
+    <view wx:else class="agency-name">{{agencyName || '无管理权限'}}</view>
+  </view>
+
+  <view class="search-band">
+    <input class="user-input" type="number" maxlength="20" value="{{userIdInput}}" placeholder="输入会员编号" bindinput="handleUserInput" />
+    <button class="search-button" loading="{{searching}}" disabled="{{searching || saving || confirming || !agencyId}}" bindtap="searchUser">查询</button>
+  </view>
+
+  <view wx:if="{{hasTarget}}" class="target-band">
+    <view class="target-main">
+      <view class="target-name">{{target.nickname || '微信用户'}}</view>
+      <view class="target-meta">会员 #{{target.id}} · {{target.status === 'normal' ? '正常' : '已停用'}}</view>
+    </view>
+    <view class="target-balance">
+      <text>当前积分</text>
+      <text class="balance-number">{{target.points_balance}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{hasTarget}}" class="adjust-section">
+    <view class="section-title">调整积分</view>
+    <view class="mode-control">
+      <button class="mode-option {{mode === 'add' ? 'active add' : ''}}" data-mode="add" bindtap="setMode">补加</button>
+      <button class="mode-option {{mode === 'deduct' ? 'active deduct' : ''}}" data-mode="deduct" bindtap="setMode">扣减</button>
+    </view>
+    <view class="field">
+      <text class="field-label">积分数量</text>
+      <input class="field-input" type="number" maxlength="6" value="{{amount}}" placeholder="1 - 100000" bindinput="handleAmountInput" />
+    </view>
+    <view class="field">
+      <text class="field-label">纠错原因</text>
+      <textarea class="remark-input" maxlength="512" value="{{remark}}" placeholder="例如：重复授予冲正、漏录购券积分" bindinput="handleRemarkInput"></textarea>
+    </view>
+    <button class="submit-button {{mode}}" loading="{{saving}}" disabled="{{saving || confirming || searching || loading}}" bindtap="submitAdjustment">
+      {{mode === 'add' ? '确认补加积分' : '确认扣减积分'}}
+    </button>
+  </view>
+
+  <view wx:if="{{hasTarget}}" class="history-section">
+    <view class="section-title">最近流水</view>
+    <view wx:if="{{ledgers.length}}" class="history-list">
+      <view wx:for="{{ledgers}}" wx:key="id" class="history-row">
+        <view class="history-main">
+          <view class="history-title">{{item.type_text}}</view>
+          <view class="history-meta">{{item.time_text}} · {{item.operator_text}}</view>
+          <view class="history-meta">{{item.remark_text}}</view>
+        </view>
+        <view class="{{item.delta_class}}">{{item.delta_text}}</view>
+      </view>
+    </view>
+    <view wx:else class="empty-history">该会员暂无积分流水</view>
+  </view>
+
+  <view wx:elif="{{!loading}}" class="empty-state">输入会员编号后查询积分账户</view>
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+</view>

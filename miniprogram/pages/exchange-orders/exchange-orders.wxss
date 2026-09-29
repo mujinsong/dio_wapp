@@ -1,0 +1,168 @@
+.orders-page {
+  background: #f7f8fb;
+}
+
+.orders-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24rpx;
+  padding: 18rpx 0 34rpx;
+}
+
+.eyebrow {
+  color: #c04736;
+  font-size: 22rpx;
+  font-weight: 900;
+}
+
+.title {
+  margin-top: 8rpx;
+  color: #172033;
+  font-size: 44rpx;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.refresh-button {
+  width: 72rpx;
+  height: 72rpx;
+  margin: 0;
+  padding: 0;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #172033;
+  line-height: 72rpx;
+}
+
+.refresh-button::after {
+  border-color: #e5eaf2;
+  border-radius: 50%;
+}
+
+.refresh-button text {
+  font-size: 38rpx;
+}
+
+.state-panel,
+.empty-panel {
+  border: 1rpx solid #e5eaf2;
+  border-radius: 8rpx;
+  background: #ffffff;
+  padding: 48rpx 30rpx;
+  color: #8a94a5;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.empty-title {
+  margin-bottom: 28rpx;
+  color: #172033;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22rpx;
+  padding-bottom: 36rpx;
+}
+
+.order-card {
+  border: 1rpx solid #e5eaf2;
+  border-radius: 8rpx;
+  background: #ffffff;
+  padding: 26rpx;
+  box-shadow: 0 12rpx 34rpx rgba(23, 32, 51, 0.06);
+}
+
+.order-card-hover {
+  border-color: #cbd3df;
+  background: #fbfcfd;
+}
+
+.order-top,
+.order-meta,
+.order-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.goods-name {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  color: #172033;
+  font-size: 31rpx;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-pill {
+  flex: 0 0 auto;
+  border-radius: 999rpx;
+  padding: 8rpx 16rpx;
+  background: #eef2f7;
+  color: #667085;
+  font-size: 22rpx;
+  font-weight: 900;
+}
+
+.status-pill.pending {
+  background: #fff4d6;
+  color: #9a6700;
+}
+
+.status-pill.redeemed {
+  background: #e9f8f6;
+  color: #15736d;
+}
+
+.status-pill.canceled {
+  background: #fef3f2;
+  color: #b42318;
+}
+
+.status-pill.expired {
+  background: #f2f4f7;
+  color: #475467;
+}
+
+.order-meta {
+  margin-top: 18rpx;
+  color: #344054;
+  font-size: 25rpx;
+  font-weight: 800;
+}
+
+.order-bottom {
+  margin-top: 20rpx;
+  border-top: 1rpx solid #edf0f4;
+  padding-top: 20rpx;
+  color: #8a94a5;
+  font-size: 22rpx;
+}
+
+.error {
+  margin-top: 24rpx;
+  border-radius: 8rpx;
+  background: #fef3f2;
+  padding: 18rpx 20rpx;
+  color: #b42318;
+  font-size: 26rpx;
+}
+
+.load-state {
+  padding: 22rpx 0 8rpx;
+  color: #8a94a5;
+  font-size: 23rpx;
+  text-align: center;
+}
+.pending-exchanges { margin-top: 24rpx; border-top: 1rpx solid #dce2ea; padding-top: 24rpx; }
+.pending-title { font-size: 28rpx; font-weight: 600; }
+.pending-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16rpx; padding: 16rpx 0; font-size: 25rpx; }
+.pending-row button { flex: 0 0 auto; width: auto; margin: 0; padding: 0 20rpx; font-size: 25rpx; }

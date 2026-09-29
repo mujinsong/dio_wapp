@@ -1,0 +1,88 @@
+<view class="page report-page">
+  <view class="page-head">
+    <view>
+      <view class="page-title">经营概览</view>
+      <view class="page-subtitle">积分、购券、兑换与库存汇总</view>
+    </view>
+    <picker wx:if="{{agencies.length > 1}}" mode="selector" range="{{agencies}}" range-key="agency_name" value="{{agencyIndex}}" bindchange="handleAgencyChange">
+      <view class="agency-picker">{{agencyName}}</view>
+    </picker>
+    <view wx:else class="agency-name">{{agencyName || '无管理权限'}}</view>
+  </view>
+
+  <view class="filter-band">
+    <picker class="date-picker" mode="date" value="{{dateFrom}}" end="{{dateTo}}" bindchange="handleDateFrom">
+      <view class="date-value"><text>开始</text><text>{{dateFrom}}</text></view>
+    </picker>
+    <view class="date-separator">至</view>
+    <picker class="date-picker" mode="date" value="{{dateTo}}" start="{{dateFrom}}" bindchange="handleDateTo">
+      <view class="date-value"><text>结束</text><text>{{dateTo}}</text></view>
+    </picker>
+    <button class="filter-button" loading="{{loading}}" disabled="{{loading || !agencyId}}" bindtap="applyRange">查询</button>
+  </view>
+
+  <view wx:if="{{report}}">
+    <view class="attention-band">
+      <view class="attention-item">
+        <text class="attention-label">待审批积分</text>
+        <text class="attention-value">{{metrics.pending_grant_count || 0}} 笔</text>
+        <text class="attention-note">{{metrics.pending_grant_points || 0}} PTS</text>
+      </view>
+      <view class="attention-item warning">
+        <text class="attention-label">低库存商品</text>
+        <text class="attention-value">{{metrics.low_stock_goods_count || 0}} 件</text>
+        <text class="attention-note">库存不超过 5</text>
+      </view>
+    </view>
+
+    <view class="section-title">期间汇总</view>
+    <view class="metric-grid">
+      <view class="metric-item"><text class="metric-label">购券金额</text><text class="metric-value">¥{{metrics.ticket_sales_amount || 0}}</text><text class="metric-note">{{metrics.ticket_sales_count || 0}} 笔</text></view>
+      <view class="metric-item"><text class="metric-label">净入账积分</text><text class="metric-value">{{metrics.granted_points || 0}}</text><text class="metric-note">有效 {{metrics.grant_count || 0}} 笔</text></view>
+      <view class="metric-item"><text class="metric-label">已冲正积分</text><text class="metric-value">{{metrics.corrected_points || 0}}</text><text class="metric-note">{{metrics.corrected_grant_count || 0}} 笔</text></view>
+      <view class="metric-item"><text class="metric-label">兑换积分</text><text class="metric-value">{{metrics.exchange_points || 0}}</text><text class="metric-note">{{metrics.exchange_count || 0}} 笔</text></view>
+      <view class="metric-item"><text class="metric-label">已核销</text><text class="metric-value">{{metrics.redeemed_count || 0}}</text><text class="metric-note">待核销 {{metrics.pending_order_count || 0}}</text></view>
+      <view class="metric-item wide"><text class="metric-label">已退积分</text><text class="metric-value">{{metrics.refunded_points || 0}}</text><text class="metric-note">取消或超时 {{metrics.refunded_count || 0}} 笔</text></view>
+    </view>
+
+    <view class="section-title">工作人员汇总</view>
+    <view wx:if="{{staffStats.length}}" class="data-list">
+      <view wx:for="{{staffStats}}" wx:key="user_id" class="staff-row">
+        <view class="staff-main"><text class="staff-name">{{item.display_name}}</text><text class="staff-meta">#{{item.user_id}} · {{item.grant_count}} 笔</text></view>
+        <view class="staff-number"><text>{{item.granted_points}} PTS</text><text wx:if="{{item.corrected_points}}">冲正 {{item.corrected_points}}</text><text>购券 ¥{{item.sale_amount}}</text></view>
+      </view>
+    </view>
+    <view wx:else class="empty-band">所选日期暂无积分授予记录</view>
+
+    <view class="section-title">最近库存流水</view>
+    <view wx:if="{{movements.length}}" class="data-list">
+      <view wx:for="{{movements}}" wx:key="id" class="movement-row">
+        <view class="movement-main">
+          <view class="movement-title"><text>{{item.goods_name}}</text><text class="movement-type">{{item.type_text}}</text></view>
+          <view class="movement-meta">{{item.group_name}} · {{item.time_text}} · {{item.operator_text}}</view>
+          <view class="movement-meta">库存 {{item.before_stock}} → {{item.after_stock}}</view>
+        </view>
+        <view class="{{item.delta_class}}">{{item.delta_text}}</view>
+      </view>
+    </view>
+    <view wx:else class="empty-band">所选日期暂无库存变动</view>
+  </view>
+
+  <view wx:elif="{{loading}}" class="empty-band">正在汇总经营数据</view>
+  <view wx:if="{{error}}" class="error-band">{{error}}</view>
+  <view wx:if="{{agencyId}}" class="reconciliation-band">
+    <view class="section-title">账目核对</view>
+    <view class="movement-meta">全部历史 · 只读 · 分批快照</view>
+    <button class="reconciliation-button" bindtap="reconcile" loading="{{reconciling}}" disabled="{{reconciling}}">{{reconciliation ? (reconciliation.done ? '重新核对' : '继续核对') : '开始核对'}}</button>
+    <view wx:if="{{reconciliation}}" class="reconciliation-summary">
+      <view>{{reconciliation.done ? '本轮完成' : '尚未完成'}} · 已核对 {{reconciliation.checked}} 项</view>
+      <view>异常及待核对 {{reconciliation.issueCount}} 项 · 最近批次 {{reconciliation.checkedAt || '-'}}</view>
+      <view wx:if="{{reconciliation.issueCount > 200}}">当前仅显示前 200 项</view>
+      <view wx:for="{{reconciliation.issues}}" wx:key="index" class="reconciliation-issue">
+        <view>{{item.severityText}} · {{item.label}} #{{item.id}}</view>
+        <view class="movement-meta">{{item.message}}</view>
+      </view>
+    </view>
+    <view wx:if="{{reconciliationError}}" class="error-band">{{reconciliationError}}</view>
+  </view>
+</view>

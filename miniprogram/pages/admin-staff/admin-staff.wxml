@@ -1,0 +1,87 @@
+<view class="page admin-staff-page">
+  <view class="page-head">
+    <view>
+      <view class="eyebrow">ADMIN</view>
+      <view class="title">人员管理</view>
+      <view class="subtitle">{{agencyName}}</view>
+    </view>
+    <button class="refresh-button" loading="{{loading}}" bindtap="loadAdmin" aria-label="刷新">↻</button>
+  </view>
+
+  <view wx:if="{{!hasAdminAgency}}" class="empty-panel">当前账号没有管理员权限</view>
+
+  <view wx:else>
+    <view class="section-heading">
+      <view class="section-title">{{editingMemberId ? '编辑成员' : '添加成员'}}</view>
+      <view class="section-note">按会员编号配置团队权限</view>
+    </view>
+
+    <view class="form-panel">
+      <view class="field">
+        <view class="label">会员编号</view>
+        <input class="input" type="number" maxlength="12" disabled="{{editingMemberId > 0}}" value="{{form.user_id}}" data-field="user_id" placeholder="例如 1024" bindinput="handleInput" />
+      </view>
+      <view class="field two-cols">
+        <view>
+          <view class="label">所属团队</view>
+          <picker disabled="{{editingMemberId > 0}}" mode="selector" range="{{activeGroups}}" range-key="name" value="{{assignmentGroupIndex}}" bindchange="handleGroupChange">
+            <view class="picker-value"><text>{{assignmentGroupLabel || '暂无可用团队'}}</text><text class="chevron">›</text></view>
+          </picker>
+        </view>
+        <view>
+          <view class="label">成员角色</view>
+          <picker mode="selector" range="{{roleOptions}}" range-key="label" value="{{roleIndex}}" bindchange="handleRoleChange">
+            <view class="picker-value"><text>{{selectedRoleLabel}}</text><text class="chevron">›</text></view>
+          </picker>
+        </view>
+      </view>
+      <view class="field">
+        <view class="label">显示名称</view>
+        <input class="input" maxlength="128" value="{{form.display_name}}" data-field="display_name" placeholder="可不填" bindinput="handleInput" />
+      </view>
+      <view class="field">
+        <view class="label">备注</view>
+        <textarea class="textarea" maxlength="400" value="{{form.remark}}" data-field="remark" placeholder="可填写职责或班次" bindinput="handleInput"></textarea>
+      </view>
+      <view class="form-actions">
+        <view class="form-action reset-action" bindtap="resetForm">{{editingMemberId ? '取消编辑' : '清空'}}</view>
+        <view class="form-action submit-action {{saving ? 'disabled' : ''}}" bindtap="submit">{{saving ? '保存中' : submitTitle}}</view>
+      </view>
+    </view>
+
+    <view class="section-heading member-heading">
+      <view>
+        <view class="section-title">团队成员</view>
+        <view class="section-note">角色和启停状态立即影响工作人员权限</view>
+      </view>
+      <picker mode="selector" range="{{filterOptions}}" range-key="name" value="{{filterGroupIndex}}" bindchange="handleFilterChange">
+        <view class="filter-picker">{{selectedFilterLabel}} <text>›</text></view>
+      </picker>
+    </view>
+
+    <view wx:if="{{!hasVisibleMembers}}" class="empty-panel small-empty">当前筛选下暂无成员</view>
+    <view wx:else class="member-list">
+      <view wx:for="{{visibleMembers}}" wx:key="id" class="member-row">
+        <view class="member-main">
+          <view class="member-avatar">{{item.initial}}</view>
+          <view class="member-copy">
+            <view class="member-title">
+              <text class="member-name">{{item.name_text}}</text>
+              <text class="{{item.status_class}}">{{item.status_text}}</text>
+            </view>
+            <view class="member-account">{{item.account_text}}</view>
+            <view class="member-meta"><text class="{{item.role_class}}">{{item.role_text}}</text><text>{{item.group_name}}</text></view>
+            <view wx:if="{{item.remark}}" class="member-remark">{{item.remark}}</view>
+          </view>
+        </view>
+        <view class="member-actions">
+          <view class="member-action edit-action" data-id="{{item.id}}" bindtap="editMember">编辑</view>
+          <view class="member-action role-action" data-id="{{item.id}}" bindtap="toggleRole">{{item.role_action_text}}</view>
+          <view class="member-action status-action {{item.status == 'normal' ? 'danger' : 'enable'}}" data-id="{{item.id}}" bindtap="toggleStatus">{{item.status_action_text}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+</view>

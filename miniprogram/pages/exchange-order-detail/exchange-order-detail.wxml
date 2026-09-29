@@ -1,0 +1,76 @@
+<view class="page order-detail-page">
+  <view wx:if="{{loading && !hasOrder}}" class="state-panel">
+    正在加载订单
+  </view>
+
+  <view wx:elif="{{hasOrder}}" class="detail-body">
+    <view class="order-card">
+      <view class="card-accent"></view>
+      <view class="order-head">
+        <view>
+          <view class="eyebrow">ORDER</view>
+          <view class="goods-name">{{order.goods_name}}</view>
+        </view>
+        <view class="{{order.status_class}}">{{order.status_text}}</view>
+      </view>
+
+      <view class="info-list">
+        <view class="info-row">
+          <text>订单号</text>
+          <view class="value with-copy" bindtap="copyOrderNo">{{order.order_no}}</view>
+        </view>
+        <view class="info-row">
+          <text>所属团体</text>
+          <view class="value">{{order.group_label}}</view>
+        </view>
+        <view class="info-row">
+          <text>消耗积分</text>
+          <view class="value points">{{order.points_text}}</view>
+        </view>
+        <view class="info-row">
+          <text>兑换时间</text>
+          <view class="value">{{order.created_text}}</view>
+        </view>
+		<view wx:if="{{order.expires_text}}" class="info-row">
+		  <text>核销截止</text>
+		  <view class="value">{{order.expires_text}}</view>
+		</view>
+        <view wx:if="{{order.redeemed_text}}" class="info-row">
+          <text>核销时间</text>
+          <view class="value">{{order.redeemed_text}}</view>
+        </view>
+        <view wx:if="{{order.canceled_text}}" class="info-row">
+          <text>取消时间</text>
+          <view class="value">{{order.canceled_text}}</view>
+        </view>
+		<view wx:if="{{order.expired_text}}" class="info-row">
+		  <text>过期退款</text>
+		  <view class="value">{{order.expired_text}}</view>
+		</view>
+      </view>
+    </view>
+
+    <view wx:if="{{order.can_redeem}}" class="qr-panel">
+      <view class="panel-title">现场核销码</view>
+      <view class="qr-box">
+        <image wx:if="{{redeemQR.qr_image}}" class="qr-image" src="{{redeemQR.qr_image}}" mode="aspectFit"></image>
+        <view wx:else class="qr-placeholder">{{qrLoading ? '正在生成' : '暂无核销码'}}</view>
+      </view>
+      <button class="secondary-button" loading="{{qrLoading}}" bindtap="refreshQRCode">刷新核销码</button>
+      <button class="cancel-button" loading="{{canceling}}" disabled="{{canceling || qrLoading}}" bindtap="cancelOrder">取消兑换并退回积分</button>
+    </view>
+
+    <view wx:else class="done-panel">
+      <view class="{{order.done_mark_class}}">{{order.done_mark}}</view>
+      <view class="done-title">{{order.status_text}}</view>
+      <view class="done-copy">{{order.done_copy}}</view>
+    </view>
+  </view>
+
+  <view wx:else class="state-panel error-state">
+    <view class="state-title">无法查看订单</view>
+    <view class="state-copy">{{error}}</view>
+  </view>
+
+  <view wx:if="{{error && hasOrder}}" class="error">{{error}}</view>
+</view>

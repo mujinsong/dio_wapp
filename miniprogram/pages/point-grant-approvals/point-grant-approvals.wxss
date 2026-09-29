@@ -1,0 +1,226 @@
+.approvals-page {
+  background: #f7f8fb;
+}
+
+.header {
+  padding: 18rpx 0 30rpx;
+}
+
+.eyebrow {
+  color: #c04736;
+  font-size: 22rpx;
+  font-weight: 900;
+}
+
+.title {
+  margin-top: 8rpx;
+  color: #172033;
+  font-size: 44rpx;
+  font-weight: 900;
+}
+
+.group-picker,
+.state-panel {
+  border: 1rpx solid #e5eaf2;
+  border-radius: 8rpx;
+  background: #ffffff;
+}
+
+.group-picker {
+  display: flex;
+  min-height: 88rpx;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  padding: 0 24rpx;
+  color: #172033;
+  font-size: 27rpx;
+  font-weight: 800;
+}
+
+.chevron {
+  color: #98a2b3;
+  font-size: 40rpx;
+}
+
+.filter-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6rpx;
+  margin: 22rpx 0;
+  border-radius: 8rpx;
+  background: #e9edf3;
+  padding: 6rpx;
+}
+
+.filter-tab {
+  display: flex;
+  min-width: 0;
+  min-height: 66rpx;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6rpx;
+  color: #667085;
+  font-size: 23rpx;
+  font-weight: 800;
+}
+
+.filter-tab.active {
+  background: #ffffff;
+  color: #172033;
+}
+
+.state-panel {
+  padding: 48rpx 26rpx;
+  color: #8a94a5;
+  font-size: 27rpx;
+  text-align: center;
+}
+
+.request-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  padding-bottom: 36rpx;
+}
+
+.request-card {
+  border: 1rpx solid #e5eaf2;
+  border-radius: 8rpx;
+  background: #ffffff;
+  padding: 26rpx;
+}
+
+.request-head,
+.meta-row,
+.review-actions,
+.points-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.target {
+  min-width: 0;
+  color: #172033;
+  font-size: 30rpx;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.status {
+  flex: 0 0 auto;
+  border-radius: 6rpx;
+  padding: 7rpx 13rpx;
+  background: #eef2f7;
+  color: #667085;
+  font-size: 21rpx;
+  font-weight: 900;
+}
+
+.status.pending {
+  background: #fff4d6;
+  color: #9a6700;
+}
+
+.status.approved {
+  background: #e9f8f6;
+  color: #15736d;
+}
+
+.status.rejected {
+  background: #fef3f2;
+  color: #b42318;
+}
+
+.points-row {
+  justify-content: flex-start;
+  margin-top: 20rpx;
+  color: #c04736;
+}
+
+.points-row text:first-child {
+  font-size: 46rpx;
+  font-weight: 900;
+}
+
+.points-row text:last-child {
+  font-size: 23rpx;
+  font-weight: 900;
+}
+
+.sale-info {
+  margin-top: 8rpx;
+  color: #344054;
+  font-size: 25rpx;
+  font-weight: 800;
+}
+
+.meta-row {
+  margin-top: 16rpx;
+  color: #667085;
+  font-size: 23rpx;
+}
+
+.meta-row text:last-child {
+  color: #344054;
+  font-weight: 800;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.remark {
+  margin-top: 18rpx;
+  border-left: 6rpx solid #d0d5dd;
+  background: #f8fafc;
+  padding: 15rpx 18rpx;
+  color: #475467;
+  font-size: 23rpx;
+  line-height: 1.5;
+}
+
+.review-remark {
+  border-left-color: #2f9c95;
+}
+
+.review-actions {
+  margin-top: 24rpx;
+  border-top: 1rpx solid #edf0f4;
+  padding-top: 22rpx;
+}
+
+.review-actions button {
+  box-sizing: border-box;
+  min-width: 0;
+  flex: 1;
+  height: 76rpx;
+  margin: 0;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  font-weight: 800;
+  line-height: 76rpx;
+}
+
+.review-actions button::after {
+  border: 0;
+}
+
+.reject-button {
+  background: #fef3f2;
+  color: #b42318;
+}
+
+.approve-button {
+  background: #172033;
+  color: #ffffff;
+}
+
+.error {
+  margin-top: 22rpx;
+  border-radius: 8rpx;
+  background: #fef3f2;
+  padding: 18rpx 20rpx;
+  color: #b42318;
+  font-size: 25rpx;
+}

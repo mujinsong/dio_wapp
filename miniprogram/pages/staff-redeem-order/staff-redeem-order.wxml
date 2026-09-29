@@ -1,0 +1,54 @@
+<view class="page staff-redeem-page">
+  <view class="header">
+    <view>
+      <view class="eyebrow">STAFF</view>
+      <view class="title">兑换核销</view>
+    </view>
+    <button class="scan-button" bindtap="scanCode">
+      <text class="scan-corner corner-a"></text>
+      <text class="scan-corner corner-b"></text>
+      <text class="scan-corner corner-c"></text>
+      <text class="scan-corner corner-d"></text>
+    </button>
+  </view>
+
+  <view class="form-panel">
+    <view class="field">
+      <view class="label">订单核销码</view>
+      <view class="scan-row">
+        <input class="input token-input" value="{{rawScanText}}" placeholder="扫码后自动填入" bindinput="handleTokenInput" />
+        <button class="small-button" bindtap="scanCode">扫码</button>
+      </view>
+    </view>
+
+    <button class="primary-button submit-button" loading="{{loading}}" bindtap="submit">
+      确认核销
+    </button>
+  </view>
+
+  <view wx:if="{{result}}" class="result-panel">
+    <view class="result-title">核销成功</view>
+    <view class="result-line">
+      <text>商品</text>
+      <text>{{result.goods_name}}</text>
+    </view>
+    <view class="result-line">
+      <text>团体</text>
+      <text>{{result.group_name}}</text>
+    </view>
+    <view class="result-line">
+      <text>订单号</text>
+      <text>{{result.order_no}}</text>
+    </view>
+    <view class="result-line">
+      <text>积分</text>
+      <text>{{result.points_text}}</text>
+    </view>
+    <view class="result-line">
+      <text>时间</text>
+      <text>{{result.redeemed_text}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+</view>

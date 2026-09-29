@@ -1,0 +1,47 @@
+<view class="page orders-page">
+  <view class="orders-head">
+    <view>
+      <view class="eyebrow">EXCHANGE</view>
+      <view class="title">我的兑换</view>
+    </view>
+    <button class="refresh-button" loading="{{loading}}" bindtap="loadOrders">
+      <text>↻</text>
+    </button>
+  </view>
+
+  <view wx:if="{{loading && !orders.length}}" class="state-panel">
+    正在加载订单
+  </view>
+
+  <view wx:elif="{{showEmpty}}" class="empty-panel">
+    <view class="empty-title">暂无兑换订单</view>
+    <button class="primary-button" bindtap="goShop">去积分商店</button>
+  </view>
+
+  <view wx:else class="order-list">
+    <view wx:for="{{orders}}" wx:key="id" class="order-card" data-order-id="{{item.id}}" bindtap="openOrder" hover-class="order-card-hover">
+      <view class="order-top">
+        <view class="goods-name">{{item.goods_name}}</view>
+        <view class="{{item.status_class}}">{{item.status_text}}</view>
+      </view>
+      <view class="order-meta">
+        <text>{{item.group_label}}</text>
+        <text>{{item.points_text}}</text>
+      </view>
+      <view class="order-bottom">
+        <text>{{item.order_no}}</text>
+		<text>{{item.status === 'pending' && item.expires_text ? '截止 ' + item.expires_text : item.created_text}}</text>
+      </view>
+    </view>
+    <view class="load-state">{{loadingMore ? '正在加载' : (hasMore ? '继续上拉加载' : '已显示全部订单')}}</view>
+  </view>
+
+  <view wx:if="{{pendingExchanges.length}}" class="pending-exchanges">
+    <view class="pending-title">待核对的兑换请求</view>
+    <view wx:for="{{pendingExchanges}}" wx:key="id" class="pending-row">
+      <text>商品 #{{item.goods_id}}</text>
+      <button data-request-id="{{item.id}}" bindtap="recoverExchange" disabled="{{recovering}}">核对结果</button>
+    </view>
+  </view>
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+</view>

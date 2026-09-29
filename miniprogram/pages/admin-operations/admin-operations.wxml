@@ -1,0 +1,59 @@
+<view class="page operations-page">
+  <view class="page-head">
+    <view>
+      <view class="page-title">业务明细</view>
+      <view class="page-subtitle">{{agencyName || '加载管理权限'}}</view>
+    </view>
+    <picker wx:if="{{agencies.length > 1}}" mode="selector" range="{{agencies}}" range-key="agency_name" value="{{agencyIndex}}" bindchange="handleAgencyChange">
+      <view class="agency-picker">切换事务所</view>
+    </picker>
+  </view>
+
+  <view class="type-control">
+    <button class="type-option {{activeType === 'sales' ? 'active' : ''}}" data-type="sales" bindtap="setType">售券与积分</button>
+    <button class="type-option {{activeType === 'orders' ? 'active' : ''}}" data-type="orders" bindtap="setType">兑换订单</button>
+  </view>
+
+  <view class="filter-band">
+    <view class="date-row">
+      <picker class="date-picker" mode="date" value="{{dateFrom}}" end="{{dateTo}}" bindchange="handleDateFrom"><view class="date-value"><text>开始</text><text>{{dateFrom}}</text></view></picker>
+      <view class="date-separator">至</view>
+      <picker class="date-picker" mode="date" value="{{dateTo}}" start="{{dateFrom}}" end="{{maxDate}}" bindchange="handleDateTo"><view class="date-value"><text>结束</text><text>{{dateTo}}</text></view></picker>
+    </view>
+    <view class="query-row">
+      <picker class="status-picker" mode="selector" range="{{statusOptions}}" range-key="label" value="{{statusIndex}}" bindchange="handleStatusChange"><view class="status-value">{{statusLabel}}</view></picker>
+      <input class="keyword-input" maxlength="64" value="{{keyword}}" placeholder="单号、会员、商品或员工" bindinput="handleKeyword" confirm-type="search" bindconfirm="applyFilters" />
+      <button class="query-button" loading="{{loading}}" disabled="{{loading}}" bindtap="applyFilters">查询</button>
+    </view>
+  </view>
+
+  <view class="list-head">
+    <view class="result-count">当前已加载 {{items.length}} 条</view>
+    <button class="export-button" loading="{{exporting}}" disabled="{{exporting || loading}}" bindtap="exportCSV">导出 CSV</button>
+  </view>
+
+  <view wx:if="{{items.length}}" class="operation-list">
+    <view wx:for="{{items}}" wx:key="id" class="operation-row">
+      <block wx:if="{{activeType === 'sales'}}">
+        <view class="operation-top"><text class="operation-title">{{item.business_text}}</text><text class="{{item.status_class}}">{{item.status_text}}</text></view>
+        <view class="operation-meta">{{item.time_text}} · {{item.group_name}} · {{item.payment_text}}</view>
+        <view class="operation-meta">{{item.user_text}} · {{item.staff_text}}</view>
+        <view wx:if="{{item.sale_no}}" class="operation-code">{{item.sale_no}}</view>
+        <view wx:if="{{item.review_remark}}" class="operation-note">审核：{{item.review_remark}}</view>
+        <view class="operation-amount"><text>{{item.amount_text}}</text><text>+{{item.points}} PTS</text></view>
+      </block>
+      <block wx:else>
+        <view class="operation-top"><text class="operation-title">{{item.goods_name}}</text><text class="{{item.status_class}}">{{item.status_text}}</text></view>
+        <view class="operation-meta">{{item.time_text}} · {{item.group_name}} · {{item.points_cost}} PTS</view>
+        <view class="operation-meta">{{item.user_text}}{{item.redeemer_text}}</view>
+        <view class="operation-code">{{item.order_no}}</view>
+        <view wx:if="{{item.action_time_text}}" class="operation-note">{{item.action_time_text}}</view>
+      </block>
+    </view>
+  </view>
+
+  <view wx:elif="{{!loading}}" class="empty-band">当前条件下没有业务记录</view>
+  <view wx:if="{{loadingMore}}" class="loading-more">正在加载更多</view>
+  <view wx:elif="{{hasMore}}" class="loading-more">继续下拉加载</view>
+  <view wx:if="{{error}}" class="error-band">{{error}}</view>
+</view>

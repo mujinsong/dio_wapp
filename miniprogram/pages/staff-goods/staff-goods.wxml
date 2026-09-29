@@ -1,0 +1,145 @@
+<view class="page staff-goods-page">
+  <view class="page-head">
+    <view>
+      <view class="eyebrow">{{isTeamLeader ? 'TEAM LEADER' : 'STAFF WORKSPACE'}}</view>
+      <view class="title">{{workspaceTitle}}</view>
+      <view class="subtitle">{{workspaceSubtitle}}</view>
+    </view>
+    <button class="refresh-button" loading="{{loading}}" bindtap="loadIdentity" aria-label="刷新">↻</button>
+  </view>
+
+  <view wx:if="{{!hasStaffGroups}}" class="empty-panel">当前账号没有工作人员团体权限</view>
+
+  <view wx:else>
+    <view class="group-panel">
+      <view class="label">当前团体</view>
+      <picker mode="selector" range="{{staffGroups}}" range-key="group_name" value="{{groupIndex}}" bindchange="handleGroupChange">
+        <view class="picker-value">
+          <text>{{selectedGroupLabel}}</text>
+          <text class="chevron">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="section-heading">
+      <view>
+        <view class="section-title">{{submitSectionTitle}}</view>
+        <view class="section-note">{{submitSectionNote}}</view>
+      </view>
+    </view>
+
+    <view class="form-panel">
+      <view class="field">
+        <view class="label">商品名称</view>
+        <input class="input" value="{{form.name}}" data-field="name" placeholder="例如 现场拍立得券" bindinput="handleInput" />
+      </view>
+      <view class="field two-cols">
+        <view>
+          <view class="label">积分价格</view>
+          <input class="input" type="number" value="{{form.price_points}}" data-field="price_points" placeholder="30" bindinput="handleInput" />
+        </view>
+        <view>
+          <view class="label">库存</view>
+          <input class="input" type="number" value="{{form.stock}}" data-field="stock" placeholder="20" bindinput="handleInput" />
+        </view>
+      </view>
+      <view wx:if="{{form.status == 'on_sale'}}" class="field schedule-field">
+        <view class="schedule-row">
+          <view class="schedule-copy">
+            <view class="label">定时上架</view>
+            <view class="schedule-note">{{isTeamLeader ? '保存后，将在设定时间开放兑换' : '批准后，将在设定时间开放兑换'}}</view>
+          </view>
+          <switch checked="{{form.schedule_enabled}}" color="#207f79" bindchange="handleScheduleToggle" />
+        </view>
+        <view wx:if="{{form.schedule_enabled}}" class="schedule-pickers">
+          <picker mode="date" value="{{form.sale_start_date}}" bindchange="handleSaleDate">
+            <view class="picker-value schedule-picker"><text>{{form.sale_start_date}}</text><text class="chevron">›</text></view>
+          </picker>
+          <picker mode="time" value="{{form.sale_start_time}}" bindchange="handleSaleTime">
+            <view class="picker-value schedule-picker"><text>{{form.sale_start_time}}</text><text class="chevron">›</text></view>
+          </picker>
+        </view>
+      </view>
+      <view class="field two-cols">
+        <view>
+          <view class="label">每人限购</view>
+          <input class="input" type="number" value="{{form.purchase_limit_per_user}}" data-field="purchase_limit_per_user" placeholder="0 不限购" bindinput="handleInput" />
+        </view>
+        <view>
+          <view class="label">限购小时</view>
+          <input class="input" type="number" value="{{form.purchase_limit_hours}}" data-field="purchase_limit_hours" placeholder="0" bindinput="handleInput" />
+        </view>
+      </view>
+      <view class="field two-cols">
+        <view>
+          <view class="label">目标状态</view>
+          <picker mode="selector" range="{{statusOptions}}" range-key="label" value="{{statusIndex}}" bindchange="handleStatusChange">
+            <view class="picker-value"><text>{{selectedStatusLabel}}</text><text class="chevron">›</text></view>
+          </picker>
+        </view>
+        <view>
+          <view class="label">排序</view>
+          <input class="input" type="number" value="{{form.sort}}" data-field="sort" placeholder="0" bindinput="handleInput" />
+        </view>
+      </view>
+      <view class="field">
+        <view class="label">图片 URL</view>
+        <input class="input" value="{{form.image_url}}" data-field="image_url" placeholder="可不填" bindinput="handleInput" />
+      </view>
+      <view class="field">
+        <view class="label">兑换说明</view>
+        <textarea class="textarea" value="{{form.description}}" data-field="description" placeholder="领取方式、使用时间等" bindinput="handleInput"></textarea>
+      </view>
+      <view class="form-actions">
+        <view class="form-action reset-action" bindtap="resetForm">清空</view>
+        <view class="form-action submit-action {{saving ? 'disabled' : ''}}" bindtap="submit">{{saving ? '提交中' : submitTitle}}</view>
+      </view>
+    </view>
+
+    <view class="section-heading">
+      <view>
+        <view class="section-title">正式商品</view>
+        <view class="section-note">{{officialGoodsNote}}</view>
+      </view>
+    </view>
+    <view wx:if="{{!hasGoods}}" class="empty-panel small-empty">当前团体暂无商品</view>
+    <view wx:else class="goods-list">
+      <view wx:for="{{goods}}" wx:key="id" class="goods-row">
+        <view class="goods-mark">{{item.initial}}</view>
+        <view class="goods-info">
+          <view class="goods-top"><text class="goods-name">{{item.name}}</text><text class="goods-status">{{item.status_text}}</text></view>
+          <view class="goods-meta">{{item.price_text}} · {{item.stock_text}} · {{item.limit_text}} · {{item.sale_time_text}}</view>
+        </view>
+        <view class="row-actions">
+          <view class="row-button edit-button" data-id="{{item.id}}" bindtap="editGoods">编辑</view>
+          <view class="row-button delete-button" data-id="{{item.id}}" bindtap="deleteGoods">删除</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section-heading">
+      <view>
+        <view class="section-title">{{requestSectionTitle}}</view>
+        <view class="section-note">{{requestSectionNote}}</view>
+      </view>
+    </view>
+    <view wx:if="{{!hasRequests}}" class="empty-panel small-empty">还没有提交记录</view>
+    <view wx:else class="request-list">
+      <view wx:for="{{requests}}" wx:key="id" class="request-row">
+        <view class="request-top">
+          <view class="request-name">{{item.name_text}}</view>
+          <text class="{{item.request_status_class}}">{{item.request_status_text}}</text>
+        </view>
+        <view class="request-meta">{{item.action_text}} · {{item.group_name}} · {{item.submitter_text}} · {{item.schedule_text}} · #{{item.id}}</view>
+        <view class="review-text">{{item.review_text}}</view>
+        <view wx:if="{{item.can_review}}" class="review-actions">
+          <view class="review-button reject-review" data-id="{{item.id}}" bindtap="rejectRequest">驳回</view>
+          <view class="review-button approve-review" data-id="{{item.id}}" bindtap="approveRequest">批准</view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{hasRequests}}" class="request-load-state">{{requestLoadingMore ? '正在加载' : (requestHasMore ? '继续上拉加载' : '已显示全部记录')}}</view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+</view>

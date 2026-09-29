@@ -1,0 +1,5 @@
+.env
+.gocache
+bin
+tmp
+*_test.go

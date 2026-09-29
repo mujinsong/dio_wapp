@@ -1,0 +1,54 @@
+<view class="page approvals-page">
+  <view class="header">
+    <view>
+      <view class="eyebrow">POINT REVIEW</view>
+      <view class="title">积分审批</view>
+    </view>
+  </view>
+
+  <view wx:if="{{!reviewGroups.length && !loading}}" class="state-panel">当前账号没有积分审批权限</view>
+
+  <block wx:else>
+    <picker mode="selector" range="{{reviewGroups}}" range-key="group_name" value="{{groupIndex}}" bindchange="handleGroupChange">
+      <view class="group-picker">
+        <text>{{selectedGroupLabel || '选择团队'}}</text>
+        <text class="chevron">›</text>
+      </view>
+    </picker>
+
+    <view class="filter-tabs">
+      <view wx:for="{{filters}}" wx:key="value" class="filter-tab {{activeFilter === item.value ? 'active' : ''}}" data-value="{{item.value}}" bindtap="handleFilter">{{item.label}}</view>
+    </view>
+
+    <view wx:if="{{loading && !requests.length}}" class="state-panel">正在加载申请</view>
+    <view wx:elif="{{showEmpty}}" class="state-panel">当前没有相关积分申请</view>
+
+    <view wx:else class="request-list">
+      <view wx:for="{{requests}}" wx:key="id" class="request-card">
+        <view class="request-head">
+          <view class="target">{{item.target_text}}</view>
+          <view class="{{item.status_class}}">{{item.status_text}}</view>
+        </view>
+        <view class="points-row">
+          <text>{{item.points}}</text>
+          <text>PTS</text>
+        </view>
+        <view class="sale-info">{{item.sale_text}}</view>
+        <view wx:if="{{item.sale_no}}" class="meta-row"><text>销售单号</text><text>{{item.sale_no}}</text></view>
+        <view class="meta-row"><text>提交人</text><text>{{item.submitter_text}}</text></view>
+        <view class="meta-row"><text>提交时间</text><text>{{item.created_text}}</text></view>
+        <view wx:if="{{item.remark}}" class="remark">{{item.remark}}</view>
+        <view wx:if="{{item.reviewed_text}}" class="meta-row"><text>处理时间</text><text>{{item.reviewed_text}}</text></view>
+        <view wx:if="{{item.review_remark}}" class="remark review-remark">审批备注：{{item.review_remark}}</view>
+        <view wx:if="{{item.can_review}}" class="review-actions">
+          <button class="reject-button" data-id="{{item.id}}" disabled="{{reviewingId > 0}}" bindtap="reject">驳回</button>
+          <button class="approve-button" data-id="{{item.id}}" loading="{{reviewingId === item.id}}" disabled="{{reviewingId > 0}}" bindtap="approve">批准入账</button>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <view wx:if="{{requests.length && !error}}" class="state-panel">{{loading ? '正在加载' : (hasMore ? '上拉加载更多' : '已加载全部申请')}}</view>
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+  <button wx:if="{{error}}" size="mini" disabled="{{loading}}" bindtap="retryLoad">重试加载</button>
+</view>

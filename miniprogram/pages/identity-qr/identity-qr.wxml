@@ -1,0 +1,32 @@
+<view class="page qr-page">
+  <view class="qr-head">
+    <view>
+      <view class="eyebrow">MEMBER QR</view>
+      <view class="title">我的积分二维码</view>
+    </view>
+    <button class="icon-button" loading="{{loading}}" disabled="{{loading}}" bindtap="createQRCode">
+      <text>↻</text>
+    </button>
+  </view>
+
+  <view class="qr-card">
+    <view wx:if="{{qr && !expired}}" class="qr-box">
+      <image class="qr-image" src="{{qrImage}}" mode="aspectFit"></image>
+    </view>
+    <view wx:elif="{{expired}}" class="qr-empty qr-expired">二维码已过期</view>
+    <view wx:elif="{{loading}}" class="qr-empty">生成中</view>
+    <view wx:else class="qr-empty">暂无二维码</view>
+
+    <view class="qr-copy">
+      <view class="qr-title">给工作人员扫码</view>
+      <view class="qr-desc">{{expiresText || '二维码短期有效'}}，过期后点击右上角刷新。</view>
+    </view>
+
+  </view>
+
+  <view class="notice">
+    这个二维码只用于现场工作人员核对并添加积分，不展示你的微信账号信息。
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+</view>

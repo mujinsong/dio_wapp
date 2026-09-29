@@ -1,0 +1,292 @@
+<view class="page home-page">
+  <view wx:if="{{!user}}" class="login-shell">
+    <view class="stage-visual">
+      <view class="light-beam beam-left"></view>
+      <view class="light-beam beam-right"></view>
+      <view class="marquee">
+        <view class="marquee-dots">
+          <text></text><text></text><text></text><text></text><text></text>
+        </view>
+        <view class="marquee-word">DIO</view>
+      </view>
+      <view class="stage-line"></view>
+      <view class="stage-floor">
+        <view class="floor-stripe stripe-a"></view>
+        <view class="floor-stripe stripe-b"></view>
+        <view class="floor-stripe stripe-c"></view>
+      </view>
+      <view class="coin coin-a">P</view>
+      <view class="coin coin-b">+</view>
+      <view class="pass-card">
+        <view class="pass-stub"></view>
+        <view class="pass-main">
+          <view class="pass-title">POINTS</view>
+          <view class="pass-bars">
+            <text></text><text></text><text></text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="login-content">
+      <view class="brand-mark">D</view>
+      <view class="login-title">DIO POINTS</view>
+      <view class="login-subtitle">现场积分兑换</view>
+    </view>
+
+    <button class="wechat-button" loading="{{loading}}" bindtap="handleLogin">
+      <text class="wechat-icon">W</text>
+      <text>微信一键登录</text>
+    </button>
+
+    <view class="login-note">仅用于识别你的会员账号</view>
+  </view>
+
+  <view wx:else class="dashboard">
+    <view class="dashboard-head">
+      <view class="user-summary">
+        <view class="avatar-mark">{{user.avatar_text}}</view>
+        <view class="user-copy">
+          <view class="welcome">晚上好，{{user.nickname_display}}</view>
+          <view class="member-number">MEMBER NO. {{user.member_no}}</view>
+        </view>
+      </view>
+      <button class="refresh-button" loading="{{loading}}" bindtap="handleRefresh" aria-label="刷新积分">
+        <text class="refresh-icon">↻</text>
+      </button>
+    </view>
+
+    <view class="account-card">
+      <view class="card-accent"></view>
+      <view class="card-top">
+        <view class="card-brand">DIO POINTS</view>
+        <view class="status-dot"><text></text>{{user.status_text}}</view>
+      </view>
+      <view class="balance-label">可用积分</view>
+      <view class="balance-row">
+        <view class="points">{{user.points_balance_display}}</view>
+        <view class="points-unit">PTS</view>
+      </view>
+      <view class="card-footer">
+        <view class="card-note">现场活动 · 商品兑换</view>
+        <view class="card-logo">D</view>
+      </view>
+    </view>
+
+    <view class="section-title">账户</view>
+    <view class="action-grid">
+      <button class="action-button" bindtap="goIdentityQR">
+        <view class="action-icon qr-icon">
+          <view class="qr-dot dot-a"></view>
+          <view class="qr-dot dot-b"></view>
+          <view class="qr-dot dot-c"></view>
+          <view class="qr-line"></view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">我的二维码</text>
+          <text class="action-subtitle">给工作人员扫码加积分</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button class="action-button" bindtap="goShop">
+        <view class="action-icon shop-icon">
+          <view class="shop-bag"></view>
+          <view class="shop-handle"></view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">积分商店</text>
+          <text class="action-subtitle">用积分兑换现场商品</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button class="action-button" bindtap="goExchangeOrders">
+        <view class="action-icon order-icon">
+          <view class="order-line line-a"></view>
+          <view class="order-line line-b"></view>
+          <view class="order-seal"></view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">我的兑换</text>
+          <text class="action-subtitle">查看订单和核销码</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button class="action-button" bindtap="goPointLedgers">
+        <view class="action-icon ledger-icon">
+          <view class="ledger-bar bar-a"></view>
+          <view class="ledger-bar bar-b"></view>
+          <view class="ledger-bar bar-c"></view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">积分明细</text>
+          <text class="action-subtitle">查看积分入账、兑换和退款</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button wx:if="{{user.is_staff}}" class="action-button" bindtap="goStaffAddPoints">
+        <view class="action-icon staff-icon">
+          <view class="staff-plus-h"></view>
+          <view class="staff-plus-v"></view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">员工加积分</text>
+          <text class="action-subtitle">扫码用户二维码后录入</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button wx:if="{{user.is_staff}}" class="action-button" bindtap="goStaffWorkbench">
+        <view class="action-icon workbench-icon">
+          <view class="workbench-line workbench-a"></view>
+          <view class="workbench-line workbench-b"></view>
+          <view class="workbench-mark">✓</view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">员工工作台</text>
+          <text class="action-subtitle">查看额度、售券、积分和核销</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+	  <button wx:if="{{user.is_team_leader || user.is_admin}}" class="action-button" bindtap="goPointGrantApprovals">
+		<view class="action-icon adjust-icon">
+		  <text class="adjust-symbol">✓</text>
+		</view>
+		<view class="action-copy">
+		  <text class="action-title">积分审批</text>
+		  <text class="action-subtitle">审批本团队大额积分申请</text>
+		</view>
+		<text class="action-arrow">›</text>
+	  </button>
+
+      <button wx:if="{{user.is_staff || user.is_admin}}" class="action-button" bindtap="goPointCorrections">
+        <view class="action-icon correction-icon"><text class="correction-symbol">↶</text></view>
+        <view class="action-copy">
+          <text class="action-title">积分冲正</text>
+          <text class="action-subtitle">申请或审批错误积分冲正</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button wx:if="{{user.is_staff}}" class="action-button" bindtap="goStaffRedeemOrder">
+        <view class="action-icon redeem-icon">
+          <view class="redeem-scan scan-a"></view>
+          <view class="redeem-scan scan-b"></view>
+          <view class="redeem-check"></view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">员工核销</text>
+          <text class="action-subtitle">扫码确认兑换订单</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button wx:if="{{user.is_staff}}" class="action-button" bindtap="goStaffGoods">
+        <view class="action-icon admin-goods-icon">
+          <view class="admin-shelf shelf-a"></view>
+          <view class="admin-shelf shelf-b"></view>
+          <view class="admin-box"></view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">{{user.is_team_leader ? '团队商品' : '商品申请'}}</text>
+          <text class="action-subtitle">{{user.is_team_leader ? '直接管理商品并审批申请' : '管理所属团体的商品'}}</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button wx:if="{{user.is_admin}}" class="action-button" bindtap="goAdminGoods">
+        <view class="action-icon admin-goods-icon">
+          <view class="admin-shelf shelf-a"></view>
+          <view class="admin-shelf shelf-b"></view>
+          <view class="admin-box"></view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">团体与商品</text>
+          <text class="action-subtitle">维护团体和兑换商品</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button wx:if="{{user.is_admin}}" class="action-button" bindtap="goAdminStaff">
+        <view class="action-icon profile-icon">
+          <view class="person-head"></view>
+          <view class="person-body"></view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">人员管理</text>
+          <text class="action-subtitle">配置团队成员和负责人</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button wx:if="{{user.is_admin}}" class="action-button" bindtap="goAdminPoints">
+        <view class="action-icon adjust-icon">
+          <text class="adjust-symbol">±</text>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">积分纠错</text>
+          <text class="action-subtitle">查询会员并修正异常积分</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button wx:if="{{user.is_admin}}" class="action-button" bindtap="goAdminReport">
+        <view class="action-icon report-icon">
+          <view class="report-bar report-a"></view>
+          <view class="report-bar report-b"></view>
+          <view class="report-bar report-c"></view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">经营概览</text>
+          <text class="action-subtitle">查看购券、积分、兑换和库存</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button wx:if="{{user.is_admin}}" class="action-button" bindtap="goAdminOperations">
+        <view class="action-icon operations-icon">
+          <view class="operations-line operations-a"></view>
+          <view class="operations-line operations-b"></view>
+          <view class="operations-line operations-c"></view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">业务明细</text>
+          <text class="action-subtitle">查询并导出售券和兑换记录</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button class="action-button" bindtap="goProfile">
+        <view class="action-icon profile-icon">
+          <view class="person-head"></view>
+          <view class="person-body"></view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">会员资料</text>
+          <text class="action-subtitle">查看账户信息</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+
+      <button class="action-button" bindtap="handleLogout">
+        <view class="action-icon logout-icon">
+          <view class="door-line"></view>
+          <view class="arrow-line">→</view>
+        </view>
+        <view class="action-copy">
+          <text class="action-title">退出登录</text>
+          <text class="action-subtitle">切换微信账户</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </button>
+    </view>
+
+    <view class="dashboard-foot">POINTS FOR EVERY LIVE MOMENT</view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+</view>

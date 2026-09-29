@@ -1,0 +1,234 @@
+.order-detail-page {
+  background: #f7f8fb;
+}
+
+.state-panel {
+  border: 1rpx solid #e5eaf2;
+  border-radius: 8rpx;
+  background: #ffffff;
+  padding: 48rpx 30rpx;
+  color: #8a94a5;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.detail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.order-card,
+.qr-panel,
+.done-panel {
+  overflow: hidden;
+  border: 1rpx solid #e5eaf2;
+  border-radius: 8rpx;
+  background: #ffffff;
+}
+
+.order-card {
+  box-shadow: 0 14rpx 36rpx rgba(23, 32, 51, 0.07);
+}
+
+.card-accent {
+  height: 10rpx;
+  background: linear-gradient(90deg, #f7c948 0 42%, #ef5b5b 42% 72%, #2f9c95 72% 100%);
+}
+
+.order-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22rpx;
+  padding: 30rpx;
+}
+
+.eyebrow {
+  color: #c04736;
+  font-size: 21rpx;
+  font-weight: 900;
+}
+
+.goods-name {
+  margin-top: 8rpx;
+  color: #172033;
+  font-size: 36rpx;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.status-pill {
+  flex: 0 0 auto;
+  border-radius: 999rpx;
+  padding: 8rpx 16rpx;
+  background: #eef2f7;
+  color: #667085;
+  font-size: 22rpx;
+  font-weight: 900;
+}
+
+.status-pill.pending {
+  background: #fff4d6;
+  color: #9a6700;
+}
+
+.status-pill.redeemed {
+  background: #e9f8f6;
+  color: #15736d;
+}
+
+.status-pill.canceled {
+  background: #fef3f2;
+  color: #b42318;
+}
+
+.status-pill.expired {
+  background: #f2f4f7;
+  color: #475467;
+}
+
+.info-list {
+  padding: 0 30rpx 10rpx;
+}
+
+.info-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24rpx;
+  border-top: 1rpx solid #edf0f4;
+  padding: 24rpx 0;
+}
+
+.info-row text {
+  flex: 0 0 150rpx;
+  color: #667085;
+  font-size: 25rpx;
+}
+
+.value {
+  min-width: 0;
+  flex: 1;
+  color: #172033;
+  font-size: 25rpx;
+  font-weight: 800;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.with-copy {
+  color: #2f6fbd;
+}
+
+.points {
+  color: #c04736;
+}
+
+.qr-panel {
+  padding: 30rpx;
+  text-align: center;
+}
+
+.panel-title {
+  color: #172033;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.qr-box {
+  display: flex;
+  width: 430rpx;
+  height: 430rpx;
+  align-items: center;
+  justify-content: center;
+  margin: 28rpx auto;
+  border: 1rpx solid #e5eaf2;
+  border-radius: 8rpx;
+  background: #ffffff;
+}
+
+.qr-image {
+  width: 388rpx;
+  height: 388rpx;
+}
+
+.qr-placeholder {
+  color: #8a94a5;
+  font-size: 26rpx;
+}
+
+.cancel-button {
+  height: 80rpx;
+  margin-top: 20rpx;
+  border: 1rpx solid #f3b8b3;
+  border-radius: 8rpx;
+  background: #ffffff;
+  color: #b42318;
+  font-size: 28rpx;
+  line-height: 80rpx;
+}
+
+.cancel-button::after {
+  border: 0;
+}
+
+.cancel-button[disabled] {
+  background: #f7f8fb;
+  color: #98a2b3;
+}
+
+.done-panel {
+  padding: 54rpx 30rpx;
+  text-align: center;
+}
+
+.done-mark {
+  display: flex;
+  width: 88rpx;
+  height: 88rpx;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20rpx;
+  border-radius: 50%;
+  background: #e9f8f6;
+  color: #15736d;
+  font-size: 48rpx;
+  font-weight: 900;
+}
+
+.done-mark.canceled {
+  background: #fef3f2;
+  color: #b42318;
+}
+
+.done-title {
+  color: #172033;
+  font-size: 32rpx;
+  font-weight: 900;
+}
+
+.done-copy {
+  margin-top: 12rpx;
+  color: #667085;
+  font-size: 25rpx;
+  line-height: 1.6;
+}
+
+.state-title {
+  color: #172033;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.state-copy {
+  margin-top: 12rpx;
+}
+
+.error {
+  border-radius: 8rpx;
+  background: #fef3f2;
+  padding: 18rpx 20rpx;
+  color: #b42318;
+  font-size: 26rpx;
+}

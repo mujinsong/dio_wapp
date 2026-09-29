@@ -1,0 +1,30 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: dio_wapp_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?set MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: dio_wapp
+      MYSQL_USER: dio_app
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?set MYSQL_PASSWORD}
+      TZ: Asia/Shanghai
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - dio_wapp_mysql:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+
+  redis:
+    image: redis:8-alpine
+    container_name: dio_wapp_redis
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - dio_wapp_redis:/data
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:?set REDIS_PASSWORD}
+
+volumes:
+  dio_wapp_mysql:
+  dio_wapp_redis:

@@ -1,0 +1,51 @@
+<view class="page corrections-page">
+  <view class="page-head">
+    <view class="page-title">积分冲正</view>
+    <view class="page-subtitle">错误积分通过审批后生成反向流水</view>
+  </view>
+
+  <view wx:if="{{sourceGrant}}" class="submit-band">
+    <view class="submit-head"><view><view class="submit-title">申请冲正 {{sourceGrant.points}} 积分</view><view class="submit-meta">{{sourceGrant.user_text}} · {{sourceGrant.source_text}}</view></view><button class="close-button" bindtap="cancelSource">×</button></view>
+    <textarea class="reason-input" maxlength="512" value="{{reason}}" placeholder="填写录入错误原因和核对依据" bindinput="handleReason"></textarea>
+    <button class="submit-button" loading="{{submitting}}" disabled="{{submitting}}" bindtap="submitCorrection">提交冲正申请</button>
+  </view>
+
+  <view class="tab-control">
+    <button class="tab-option {{activeTab === 'mine' ? 'active' : ''}}" data-tab="mine" bindtap="setTab">我的申请</button>
+    <button wx:if="{{canReview}}" class="tab-option {{activeTab === 'review' ? 'active' : ''}}" data-tab="review" bindtap="setTab">待我审批</button>
+  </view>
+
+  <view wx:if="{{activeTab === 'review' && canReview}}" class="review-toolbar">
+    <picker mode="selector" range="{{reviewGroups}}" range-key="group_name" value="{{groupIndex}}" bindchange="handleGroupChange"><view class="group-picker">{{selectedGroupLabel}}</view></picker>
+  </view>
+
+  <view wx:if="{{activeTab === 'mine'}}">
+    <view wx:if="{{mineRequests.length}}" class="request-list">
+      <view wx:for="{{mineRequests}}" wx:key="id" class="request-row">
+        <view class="request-top"><text class="request-points">-{{item.points}} PTS</text><text class="{{item.status_class}}">{{item.status_text}}</text></view>
+        <view class="request-meta">{{item.target_text}} · {{item.group_name}} · {{item.created_text}}</view>
+        <view class="request-source">原记录：{{item.source_text}} · {{item.original_text}}</view>
+        <view class="request-reason">{{item.reason}}</view>
+        <view wx:if="{{item.review_remark}}" class="review-remark">审批：{{item.review_remark}}</view>
+      </view>
+    </view>
+    <view wx:elif="{{!error}}" class="empty-band">{{loading ? '正在加载申请' : '暂无冲正申请'}}</view>
+  </view>
+
+  <view wx:if="{{activeTab === 'review' && canReview}}">
+    <view wx:if="{{reviewRequests.length}}" class="request-list">
+      <view wx:for="{{reviewRequests}}" wx:key="id" class="request-row">
+        <view class="request-top"><text class="request-points">-{{item.points}} PTS</text><text class="{{item.status_class}}">{{item.status_text}}</text></view>
+        <view class="request-meta">{{item.target_text}} · {{item.submitter_text}} · {{item.created_text}}</view>
+        <view class="request-source">原记录：{{item.source_text}} · {{item.original_text}}</view>
+        <view class="request-reason">{{item.reason}}</view>
+        <view class="review-actions"><button class="reject-button" data-id="{{item.id}}" disabled="{{reviewingId}}" bindtap="reject">驳回</button><button class="approve-button" data-id="{{item.id}}" loading="{{reviewingId === item.id}}" disabled="{{reviewingId}}" bindtap="approve">批准冲正</button></view>
+      </view>
+    </view>
+    <view wx:elif="{{!error}}" class="empty-band">{{loading ? '正在加载申请' : '当前团体没有待审批冲正'}}</view>
+  </view>
+
+  <view wx:if="{{!error && (activeTab === 'mine' ? mineRequests.length : reviewRequests.length)}}" class="empty-band">{{loading ? '正在加载' : (hasMore ? '上拉加载更多' : '已加载全部申请')}}</view>
+  <view wx:if="{{error}}" class="error-band">{{error}}</view>
+  <button wx:if="{{error}}" size="mini" disabled="{{loading}}" bindtap="retryLoad">重试加载</button>
+</view>

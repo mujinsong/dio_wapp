@@ -1,0 +1,65 @@
+.staff-goods-page { background: #f7f8fb; }
+.page-head { display: flex; align-items: center; justify-content: space-between; gap: 24rpx; padding: 18rpx 0 28rpx; }
+.eyebrow { color: #207f79; font-size: 22rpx; font-weight: 900; }
+.title { margin-top: 8rpx; color: #172033; font-size: 44rpx; font-weight: 900; line-height: 1.15; }
+.subtitle { margin-top: 10rpx; color: #7a8495; font-size: 23rpx; }
+.refresh-button { width: 72rpx; height: 72rpx; margin: 0; padding: 0; border-radius: 50%; background: #fff; color: #172033; font-size: 36rpx; line-height: 72rpx; }
+.refresh-button::after { border-color: #e5eaf2; border-radius: 50%; }
+.group-panel, .form-panel, .goods-list, .request-list, .empty-panel { border: 1rpx solid #e5eaf2; border-radius: 8rpx; background: #fff; }
+.group-panel, .form-panel { padding: 28rpx; box-shadow: 0 18rpx 42rpx rgba(23, 32, 51, .08); }
+.section-heading { margin: 40rpx 0 18rpx; }
+.section-title { color: #172033; font-size: 28rpx; font-weight: 900; }
+.section-note { margin-top: 7rpx; color: #7a8495; font-size: 22rpx; line-height: 1.4; }
+.field + .field { margin-top: 24rpx; }
+.two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18rpx; }
+.label { margin-bottom: 10rpx; color: #344054; font-size: 23rpx; font-weight: 800; }
+.picker-value, .input, .textarea { box-sizing: border-box; width: 100%; border: 1rpx solid #dde3ec; border-radius: 8rpx; background: #f9fafc; color: #172033; font-size: 27rpx; }
+.picker-value { display: flex; min-height: 82rpx; align-items: center; justify-content: space-between; gap: 16rpx; padding: 0 22rpx; }
+.picker-value text:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chevron { flex: 0 0 auto; color: #aab2bf; font-size: 40rpx; }
+.input { height: 82rpx; min-height: 82rpx; padding: 0 22rpx; }
+.textarea { height: 140rpx; padding: 20rpx 22rpx; line-height: 1.45; }
+.schedule-field { border-top: 1rpx solid #edf0f4; padding-top: 24rpx; }
+.schedule-row { display: flex; align-items: center; justify-content: space-between; gap: 20rpx; }
+.schedule-copy { min-width: 0; flex: 1; }
+.schedule-copy .label { margin-bottom: 6rpx; }
+.schedule-note { color: #7a8495; font-size: 21rpx; line-height: 1.4; }
+.schedule-pickers { display: grid; grid-template-columns: 1fr 1fr; gap: 18rpx; margin-top: 18rpx; }
+.schedule-picker { min-height: 74rpx; font-size: 24rpx; }
+.form-actions { display: flex; flex-direction: column; gap: 16rpx; margin-top: 28rpx; }
+.form-action { box-sizing: border-box; display: flex; min-width: 0; height: 82rpx; align-items: center; justify-content: center; overflow: hidden; border-radius: 8rpx; padding: 0 16rpx; font-size: 27rpx; font-weight: 900; line-height: 1.2; text-align: center; white-space: nowrap; }
+.reset-action { background: #eef2f7; color: #172033; }
+.submit-action { background: #172033; color: #fff; }
+.submit-action.disabled { opacity: .72; }
+.empty-panel { padding: 46rpx 28rpx; color: #8a94a5; font-size: 27rpx; text-align: center; }
+.small-empty { padding: 34rpx 24rpx; }
+.goods-list { overflow: hidden; }
+.goods-row { display: grid; grid-template-columns: 68rpx minmax(0, 1fr); gap: 16rpx 18rpx; align-items: start; padding: 24rpx 20rpx; }
+.goods-row + .goods-row { border-top: 1rpx solid #edf0f4; }
+.goods-mark { display: flex; width: 68rpx; height: 68rpx; flex: 0 0 auto; align-items: center; justify-content: center; border-radius: 8rpx; background: #e7f5f3; color: #207f79; font-size: 30rpx; font-weight: 900; }
+.goods-info { min-width: 0; flex: 1; }
+.goods-top { display: flex; min-width: 0; align-items: flex-start; gap: 10rpx; flex-wrap: wrap; }
+.goods-name { min-width: 0; max-width: 100%; color: #172033; font-size: 27rpx; font-weight: 900; line-height: 1.35; overflow-wrap: anywhere; }
+.goods-status { flex: 0 0 auto; border-radius: 6rpx; background: #eefaf8; padding: 5rpx 9rpx; color: #207f79; font-size: 19rpx; font-weight: 800; }
+.goods-meta { margin-top: 8rpx; color: #7a8495; font-size: 22rpx; line-height: 1.45; overflow-wrap: anywhere; }
+.request-meta { overflow: hidden; margin-top: 8rpx; color: #7a8495; font-size: 22rpx; line-height: 1.45; text-overflow: ellipsis; white-space: nowrap; }
+.row-actions { display: grid; grid-column: 1 / -1; width: 100%; min-width: 0; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12rpx; overflow: hidden; }
+.row-button { box-sizing: border-box; display: flex; width: 100%; min-width: 0; height: 64rpx; align-items: center; justify-content: center; overflow: hidden; border-radius: 8rpx; padding: 0 10rpx; font-size: 23rpx; font-weight: 800; line-height: 1; text-align: center; white-space: nowrap; }
+.edit-button { background: #172033; color: #fff; }
+.delete-button { background: #fef3f2; color: #c04736; }
+.request-list { overflow: hidden; }
+.request-row { padding: 24rpx; }
+.request-row + .request-row { border-top: 1rpx solid #edf0f4; }
+.request-top { display: flex; align-items: center; justify-content: space-between; gap: 16rpx; }
+.request-name { min-width: 0; overflow: hidden; color: #172033; font-size: 27rpx; font-weight: 900; text-overflow: ellipsis; white-space: nowrap; }
+.request-status { flex: 0 0 auto; border-radius: 6rpx; padding: 6rpx 10rpx; font-size: 20rpx; font-weight: 900; }
+.request-status.pending { background: #fff4d6; color: #8a5a00; }
+.request-status.approved { background: #eefaf8; color: #207f79; }
+.request-status.rejected { background: #fef3f2; color: #c04736; }
+.review-text { margin-top: 12rpx; color: #344054; font-size: 23rpx; line-height: 1.45; }
+.review-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12rpx; margin-top: 18rpx; }
+.review-button { display: flex; height: 64rpx; align-items: center; justify-content: center; border-radius: 8rpx; font-size: 23rpx; font-weight: 900; }
+.reject-review { background: #fef3f2; color: #c04736; }
+.approve-review { background: #172033; color: #fff; }
+.request-load-state { padding: 20rpx 0 4rpx; color: #8a94a5; font-size: 22rpx; text-align: center; }
+.error { margin-top: 24rpx; border-radius: 8rpx; background: #fef3f2; padding: 18rpx 20rpx; color: #b42318; font-size: 26rpx; }

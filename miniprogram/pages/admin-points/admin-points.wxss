@@ -1,0 +1,281 @@
+.admin-points-page {
+  background: #f7f8fb;
+}
+
+.page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24rpx;
+}
+
+.page-title {
+  color: #172033;
+  font-size: 38rpx;
+  font-weight: 900;
+}
+
+.page-subtitle {
+  margin-top: 8rpx;
+  color: #667085;
+  font-size: 24rpx;
+}
+
+.agency-name,
+.agency-picker {
+  max-width: 240rpx;
+  color: #2f6fbd;
+  font-size: 24rpx;
+  font-weight: 800;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.search-band {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 30rpx;
+}
+
+.user-input,
+.field-input,
+.remark-input {
+  box-sizing: border-box;
+  border: 1rpx solid #dfe4ec;
+  border-radius: 8rpx;
+  background: #ffffff;
+  color: #172033;
+  font-size: 27rpx;
+}
+
+.user-input {
+  min-width: 0;
+  height: 80rpx;
+  flex: 1;
+  padding: 0 24rpx;
+}
+
+.search-button {
+  width: 150rpx;
+  height: 80rpx;
+  margin: 0;
+  border-radius: 8rpx;
+  background: #111827;
+  color: #ffffff;
+  font-size: 27rpx;
+  line-height: 80rpx;
+}
+
+.search-button::after,
+.mode-option::after,
+.submit-button::after {
+  border: 0;
+}
+
+.target-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24rpx;
+  margin-top: 24rpx;
+  border-left: 10rpx solid #2f9c95;
+  border-radius: 8rpx;
+  background: #ffffff;
+  padding: 26rpx;
+}
+
+.target-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.target-name {
+  color: #172033;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.target-meta {
+  margin-top: 8rpx;
+  color: #667085;
+  font-size: 23rpx;
+}
+
+.target-balance {
+  display: flex;
+  flex-direction: column;
+  color: #8a94a5;
+  font-size: 22rpx;
+  text-align: right;
+}
+
+.balance-number {
+  margin-top: 4rpx;
+  color: #c04736;
+  font-size: 36rpx;
+  font-weight: 900;
+}
+
+.adjust-section,
+.history-section {
+  margin-top: 30rpx;
+}
+
+.section-title {
+  margin-bottom: 18rpx;
+  color: #172033;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.mode-control {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8rpx;
+  border-radius: 8rpx;
+  background: #e9edf3;
+  padding: 6rpx;
+}
+
+.mode-option {
+  height: 68rpx;
+  margin: 0;
+  border-radius: 6rpx;
+  background: transparent;
+  color: #667085;
+  font-size: 26rpx;
+  line-height: 68rpx;
+}
+
+.mode-option.active {
+  background: #ffffff;
+  color: #172033;
+  font-weight: 900;
+}
+
+.mode-option.active.add {
+  color: #15736d;
+}
+
+.mode-option.active.deduct {
+  color: #b42318;
+}
+
+.field {
+  margin-top: 20rpx;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 10rpx;
+  color: #667085;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.field-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 24rpx;
+}
+
+.remark-input {
+  width: 100%;
+  height: 150rpx;
+  padding: 20rpx 24rpx;
+  line-height: 1.5;
+}
+
+.submit-button {
+  height: 84rpx;
+  margin-top: 24rpx;
+  border-radius: 8rpx;
+  background: #15736d;
+  color: #ffffff;
+  font-size: 28rpx;
+  font-weight: 800;
+  line-height: 84rpx;
+}
+
+.submit-button.deduct {
+  background: #b42318;
+}
+
+.history-list {
+  overflow: hidden;
+  border: 1rpx solid #e5eaf2;
+  border-radius: 8rpx;
+  background: #ffffff;
+}
+
+.history-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20rpx;
+  padding: 24rpx;
+  border-bottom: 1rpx solid #edf0f4;
+}
+
+.history-row:last-child {
+  border-bottom: 0;
+}
+
+.history-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.history-title {
+  color: #172033;
+  font-size: 26rpx;
+  font-weight: 900;
+}
+
+.history-meta {
+  margin-top: 7rpx;
+  color: #8a94a5;
+  font-size: 21rpx;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.history-delta {
+  flex: 0 0 120rpx;
+  font-size: 27rpx;
+  font-weight: 900;
+  text-align: right;
+}
+
+.history-delta.positive {
+  color: #15736d;
+}
+
+.history-delta.negative {
+  color: #b42318;
+}
+
+.empty-state,
+.empty-history {
+  margin-top: 28rpx;
+  border: 1rpx solid #e5eaf2;
+  border-radius: 8rpx;
+  background: #ffffff;
+  padding: 42rpx 24rpx;
+  color: #8a94a5;
+  font-size: 25rpx;
+  text-align: center;
+}
+
+.empty-history {
+  margin-top: 0;
+}
+
+.error {
+  margin-top: 20rpx;
+  border-radius: 8rpx;
+  background: #fef3f2;
+  padding: 18rpx 20rpx;
+  color: #b42318;
+  font-size: 25rpx;
+}

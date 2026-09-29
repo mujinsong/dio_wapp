@@ -1,0 +1,79 @@
+services:
+  api:
+    build:
+      context: ../server
+    restart: unless-stopped
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    environment:
+      APP_ENV: production
+      TZ: Asia/Shanghai
+      HTTP_ADDR: :8888
+      MYSQL_DSN: ${MYSQL_DSN:?set MYSQL_DSN}
+      REDIS_ENABLED: "true"
+      REDIS_ADDR: redis:6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?set REDIS_PASSWORD}
+      REDIS_DB: "0"
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET}
+      JWT_TTL_SECONDS: ${JWT_TTL_SECONDS:-604800}
+      ORDER_REDEEM_TTL_HOURS: ${ORDER_REDEEM_TTL_HOURS:-24}
+      ORDER_EXPIRY_SCAN_SECONDS: ${ORDER_EXPIRY_SCAN_SECONDS:-60}
+      MAINTENANCE_SCAN_SECONDS: ${MAINTENANCE_SCAN_SECONDS:-3600}
+      IDEMPOTENCY_RETENTION_HOURS: ${IDEMPOTENCY_RETENTION_HOURS:-168}
+      WECHAT_APPID: ${WECHAT_APPID:?set WECHAT_APPID}
+      WECHAT_SECRET: ${WECHAT_SECRET:?set WECHAT_SECRET}
+      MOCK_LOGIN_ENABLED: "false"
+      ADMIN_OPENIDS: ${ADMIN_OPENIDS:-}
+      STAFF_OPENIDS: ${STAFF_OPENIDS:-}
+      TEAM_LEADER_OPENIDS: ${TEAM_LEADER_OPENIDS:-}
+      DEFAULT_AGENCY_NAME: ${DEFAULT_AGENCY_NAME:-默认事务所}
+    ports:
+      - "127.0.0.1:8888:8888"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?set MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: dio_wapp
+      MYSQL_USER: dio_app
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?set MYSQL_PASSWORD}
+      TZ: Asia/Shanghai
+    volumes:
+      - dio_wapp_mysql:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:8-alpine
+    restart: unless-stopped
+    volumes:
+      - dio_wapp_redis:/data
+    command: ["sh", "-c", "exec redis-server --appendonly yes --requirepass \"$$REDIS_PASSWORD\""]
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?set REDIS_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$$REDIS_PASSWORD\" ping | grep PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  dio_wapp_mysql:
+  dio_wapp_redis:

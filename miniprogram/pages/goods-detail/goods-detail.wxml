@@ -1,0 +1,72 @@
+<view class="detail-page">
+  <view wx:if="{{loading}}" class="state-panel">
+    <view class="loading-mark"></view>
+    <view class="state-title">正在加载商品</view>
+  </view>
+
+  <view wx:elif="{{hasGoods}}" class="detail-content">
+    <view class="detail-hero">
+      <image wx:if="{{goods.has_image}}" class="hero-image" src="{{goods.image_url}}" mode="aspectFill"></image>
+      <view wx:else class="hero-art">
+        <view class="art-stripe stripe-one"></view>
+        <view class="art-stripe stripe-two"></view>
+        <view class="art-ticket">
+          <view class="ticket-label">DIO EXCHANGE</view>
+          <view class="ticket-initial">{{goods.initial}}</view>
+          <view class="ticket-dots"><text></text><text></text><text></text><text></text></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="product-main">
+      <view class="group-line">
+        <text class="group-badge">{{goods.group_name}}</text>
+        <text class="agency-name">{{goods.agency_name}}</text>
+      </view>
+      <view class="product-name">{{goods.name}}</view>
+      <view class="price-row">
+        <view class="price">{{goods.price_text}}</view>
+        <view class="stock">{{goods.stock_text}}</view>
+      </view>
+      <view wx:if="{{goods.has_limit}}" class="limit-panel">
+        <text>{{goods.limit_text}}</text>
+        <text>{{goods.exchange_count_text}}</text>
+      </view>
+    </view>
+
+    <view class="detail-section">
+      <view class="section-label">兑换说明</view>
+      <view class="description">{{goods.description_text}}</view>
+    </view>
+
+    <view class="detail-section account-section">
+      <view>
+        <view class="section-label">当前可用积分</view>
+        <view class="balance-value">{{balance}} <text>PTS</text></view>
+      </view>
+      <view class="cost-note">本次消耗 {{goods.price_points}}</view>
+    </view>
+  </view>
+
+  <view wx:else class="state-panel error-state">
+    <view class="error-mark">!</view>
+    <view class="state-title">无法查看商品</view>
+    <view class="state-copy">{{error}}</view>
+    <view class="state-actions">
+      <button class="back-button" bindtap="goBack">返回商店</button>
+      <button class="retry-button" bindtap="retry">重新加载</button>
+    </view>
+  </view>
+
+  <view wx:if="{{hasGoods}}" class="purchase-bar">
+    <view class="purchase-balance">
+      <text>余额</text>
+      <view>{{balance}} PTS</view>
+    </view>
+    <button class="purchase-button" disabled="{{goods.disabled}}" loading="{{buying}}" bindtap="exchange">
+      {{goods.button_text}}
+    </button>
+  </view>
+
+  <view wx:if="{{showInlineError}}" class="toast-error">{{error}}</view>
+</view>

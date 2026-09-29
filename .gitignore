@@ -1,0 +1,21 @@
+.DS_Store
+
+# Local environment
+.env
+server/.env
+
+# Build and dependency caches
+.cache/
+server/.gocache/
+server/bin/
+server/tmp/
+server/api
+node_modules/
+dist/
+build/
+
+# WeChat DevTools local settings
+miniprogram/project.private.config.json
+
+# Production database backups
+deploy/backups/

@@ -1,0 +1,90 @@
+<view class="page workbench-page">
+  <view class="page-head">
+    <view>
+      <view class="page-title">员工工作台</view>
+      <view class="page-subtitle">{{groupLabel || '加载工作人员信息'}}</view>
+    </view>
+    <picker wx:if="{{groups.length > 1}}" mode="selector" range="{{groups}}" range-key="group_name" value="{{groupIndex}}" bindchange="handleGroupChange">
+      <view class="group-picker">切换团体</view>
+    </picker>
+  </view>
+
+  <view class="toolbar-band">
+    <picker mode="date" value="{{date}}" start="{{minDate}}" end="{{maxDate}}" bindchange="handleDateChange">
+      <view class="date-control">{{date}}</view>
+    </picker>
+    <button class="refresh-control" loading="{{loading}}" disabled="{{loading}}" bindtap="loadWorkbench">刷新</button>
+  </view>
+
+  <view class="quick-actions">
+    <button class="quick-button add" bindtap="goAddPoints"><text class="quick-symbol">+</text><text>加积分</text></button>
+    <button class="quick-button redeem" bindtap="goRedeem"><text class="quick-symbol">✓</text><text>核销订单</text></button>
+  </view>
+
+  <view class="quota-band">
+    <view class="quota-head">
+      <view><text class="quota-label">当日积分额度</text><text class="quota-used">已用 {{summary.daily_used || 0}} / {{summary.daily_limit || 0}}</text></view>
+      <view class="quota-remaining"><text>{{summary.daily_remaining || 0}}</text><text>剩余</text></view>
+    </view>
+    <view class="quota-track"><view class="quota-progress" style="width: {{quotaPercent}}%;"></view></view>
+  </view>
+
+  <view class="section-title">当日汇总</view>
+  <view class="metric-grid">
+    <view class="metric-item"><text class="metric-label">售券金额</text><text class="metric-value">¥{{summary.ticket_sales_amount || 0}}</text><text class="metric-note">{{summary.ticket_sales_count || 0}} 笔</text></view>
+    <view class="metric-item"><text class="metric-label">净入账积分</text><text class="metric-value">{{summary.approved_points || 0}}</text><text class="metric-note">有效 {{summary.approved_grant_count || 0}} 笔 · 冲正 {{summary.corrected_points || 0}}</text></view>
+    <view class="metric-item"><text class="metric-label">待审批积分</text><text class="metric-value pending">{{summary.pending_points || 0}}</text><text class="metric-note">{{summary.pending_grant_count || 0}} 笔</text></view>
+    <view class="metric-item"><text class="metric-label">核销订单</text><text class="metric-value">{{summary.redeem_count || 0}}</text><text class="metric-note">{{summary.redeemed_points || 0}} PTS</text></view>
+  </view>
+
+  <view class="section-title">收款汇总</view>
+  <view wx:if="{{paymentSummary.length}}" class="payment-list">
+    <view wx:for="{{paymentSummary}}" wx:key="payment_method" class="payment-row">
+      <text>{{item.method_text}}</text><text>{{item.sale_count}} 笔</text><text class="payment-amount">¥{{item.amount}}</text>
+    </view>
+  </view>
+  <view wx:else class="empty-band">当日暂无售券收款</view>
+
+  <view class="record-head">
+    <view class="section-title">我的记录</view>
+    <view class="tab-control">
+      <button class="tab-option {{activeTab === 'grants' ? 'active' : ''}}" data-tab="grants" bindtap="setTab">售券/积分</button>
+      <button class="tab-option {{activeTab === 'redeems' ? 'active' : ''}}" data-tab="redeems" bindtap="setTab">核销</button>
+    </view>
+  </view>
+
+  <view wx:if="{{activeTab === 'grants'}}">
+    <view wx:if="{{grantRecords.length}}" class="record-list">
+      <view wx:for="{{grantRecords}}" wx:key="id" class="record-row">
+        <view class="record-time">{{item.time_text}}</view>
+        <view class="record-main">
+          <view class="record-title"><text>{{item.title_text}}</text><text class="{{item.status_class}}">{{item.status_text}}</text></view>
+          <view class="record-meta">{{item.user_text}} · {{item.payment_text || '积分录入'}}</view>
+          <view wx:if="{{item.sale_no}}" class="record-meta">{{item.sale_no}}</view>
+          <view wx:if="{{item.review_remark}}" class="record-note">{{item.review_remark}}</view>
+          <view wx:if="{{item.correction_text}}" class="correction-state">{{item.correction_text}}</view>
+          <button wx:if="{{item.can_correct}}" class="correction-button" data-id="{{item.id}}" bindtap="requestCorrection">申请冲正</button>
+        </view>
+        <view class="record-number"><text>+{{item.points}}</text><text wx:if="{{item.amount_text}}">{{item.amount_text}}</text></view>
+      </view>
+    </view>
+    <view wx:else class="empty-band">当日暂无售券或积分记录</view>
+  </view>
+
+  <view wx:if="{{activeTab === 'redeems'}}">
+    <view wx:if="{{redeemRecords.length}}" class="record-list">
+      <view wx:for="{{redeemRecords}}" wx:key="order_id" class="record-row">
+        <view class="record-time">{{item.time_text}}</view>
+        <view class="record-main">
+          <view class="record-title">{{item.goods_name}}</view>
+          <view class="record-meta">{{item.user_text}}</view>
+          <view class="record-meta">{{item.order_no}}</view>
+        </view>
+        <view class="record-number redeem-number">{{item.points_cost}} PTS</view>
+      </view>
+    </view>
+    <view wx:else class="empty-band">当日暂无核销记录</view>
+  </view>
+
+  <view wx:if="{{error}}" class="error-band">{{error}}</view>
+</view>

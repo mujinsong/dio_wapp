@@ -1,0 +1,61 @@
+<view class="page shop-page">
+  <view class="shop-head">
+    <view>
+      <view class="eyebrow">POINTS SHOP</view>
+      <view class="title">积分商店</view>
+    </view>
+    <button class="refresh-button" loading="{{loading}}" bindtap="loadPage">
+      <text>↻</text>
+    </button>
+  </view>
+
+  <view class="balance-strip">
+    <view>
+      <view class="balance-label">可用积分</view>
+      <view class="balance-value">{{balance}}</view>
+    </view>
+    <view class="balance-unit">PTS</view>
+  </view>
+
+  <scroll-view wx:if="{{groups.length}}" class="group-tabs" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="group-tabs-inner">
+      <button wx:for="{{groups}}" wx:key="id" class="{{item.tab_class}}" data-group-id="{{item.id}}" bindtap="selectGroup">
+        {{item.name}}
+      </button>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{showEmpty}}" class="empty-panel">
+    暂无可兑换商品
+  </view>
+
+  <view wx:if="{{hasGoods}}" class="goods-list">
+    <view wx:for="{{goods}}" wx:key="id" class="goods-card" data-goods-id="{{item.id}}" bindtap="openGoods" hover-class="goods-card-hover">
+      <view class="goods-visual">
+        <image wx:if="{{item.has_image}}" class="goods-image" src="{{item.image_url}}" mode="aspectFill"></image>
+        <view wx:else class="goods-art">
+          <view class="ticket-stub"></view>
+          <view class="goods-initial">{{item.initial}}</view>
+        </view>
+      </view>
+
+      <view class="goods-body">
+        <view class="goods-top">
+          <view class="goods-name">{{item.name}}</view>
+          <view class="goods-price">{{item.price_text}}</view>
+        </view>
+        <view class="goods-desc">{{item.description}}</view>
+        <view class="goods-meta">
+          <text class="group-name">{{item.group_label}}</text>
+          <text>{{item.stock_text}}</text>
+          <text wx:if="{{item.has_limit}}" class="limit-label">{{item.limit_text}}</text>
+        </view>
+    <button class="exchange-button" disabled="{{item.disabled || buyingGoodsId}}" loading="{{buyingGoodsId == item.id}}" data-goods-id="{{item.id}}" catchtap="exchange">
+          {{item.button_text}}
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+</view>
