@@ -1,5 +1,7 @@
 .admin-staff-page { background: #f7f8fb; }
 .page-head { display: flex; align-items: center; justify-content: space-between; gap: 24rpx; padding: 18rpx 0 28rpx; }
+.page-head > view:first-child { min-width: 0; flex: 1; overflow-wrap: anywhere; }
+.refresh-button { flex-shrink: 0; }
 .eyebrow { color: #207f79; font-size: 22rpx; font-weight: 900; }
 .title { margin-top: 8rpx; color: #172033; font-size: 44rpx; font-weight: 900; line-height: 1.15; }
 .subtitle { margin-top: 8rpx; color: #7a8495; font-size: 23rpx; }
@@ -42,7 +44,8 @@
 .member-status.normal { background: #eefaf8; color: #207f79; }
 .member-status.disabled { background: #f2f4f7; color: #667085; }
 .member-account { margin-top: 7rpx; color: #7a8495; font-size: 21rpx; }
-.member-meta { display: flex; align-items: center; gap: 12rpx; margin-top: 9rpx; color: #475467; font-size: 22rpx; }
+.member-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 12rpx; margin-top: 9rpx; color: #475467; font-size: 22rpx; }
+.member-meta text { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
 .member-role { border-radius: 6rpx; padding: 4rpx 8rpx; font-size: 19rpx; font-weight: 800; }
 .member-role.staff { background: #fff4d6; color: #8a5a00; }
 .member-role.leader { background: #e9eefb; color: #304b8a; }

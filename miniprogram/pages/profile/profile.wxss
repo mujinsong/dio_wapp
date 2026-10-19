@@ -49,6 +49,7 @@
 }
 
 .profile-name {
+  overflow-wrap: anywhere;
   position: relative;
   z-index: 1;
   margin-top: 22rpx;
@@ -69,6 +70,8 @@
   position: relative;
   z-index: 1;
   display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
   align-items: center;
   justify-content: space-between;
   margin-top: 34rpx;
@@ -83,6 +86,8 @@
 }
 
 .point-value {
+  max-width: 100%;
+  overflow-wrap: anywhere;
   color: #f7c948;
   font-size: 42rpx;
   font-weight: 900;
@@ -116,6 +121,7 @@
 }
 
 .value {
+  min-width: 0;
   flex: 1;
   color: #172033;
   font-size: 26rpx;

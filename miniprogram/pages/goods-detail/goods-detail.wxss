@@ -5,7 +5,7 @@ page {
 .detail-page {
   min-height: 100vh;
   box-sizing: border-box;
-  padding-bottom: 176rpx;
+  padding-bottom: calc(176rpx + env(safe-area-inset-bottom));
 }
 
 .detail-content {
@@ -136,6 +136,7 @@ page {
 }
 
 .product-name {
+  overflow-wrap: anywhere;
   margin-top: 20rpx;
   color: #172033;
   font-size: 44rpx;
@@ -145,6 +146,7 @@ page {
 
 .price-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
   gap: 20rpx;
@@ -165,6 +167,7 @@ page {
 
 .limit-panel {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 20rpx;
@@ -192,6 +195,7 @@ page {
 }
 
 .description {
+  overflow-wrap: anywhere;
   margin-top: 16rpx;
   color: #667085;
   font-size: 27rpx;
@@ -201,6 +205,7 @@ page {
 
 .account-section {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
   gap: 24rpx;
@@ -230,7 +235,7 @@ page {
   left: 0;
   z-index: 10;
   display: grid;
-  grid-template-columns: 180rpx 1fr;
+  grid-template-columns: 180rpx minmax(0, 1fr);
   gap: 22rpx;
   align-items: center;
   border-top: 1rpx solid #dfe4ec;
@@ -245,6 +250,7 @@ page {
 }
 
 .purchase-balance view {
+  overflow-wrap: anywhere;
   margin-top: 4rpx;
   color: #172033;
   font-size: 25rpx;
@@ -252,6 +258,8 @@ page {
 }
 
 .purchase-button {
+  min-width: 0;
+  padding: 0 16rpx;
   height: 82rpx;
   margin: 0;
   border-radius: 8rpx;
@@ -359,9 +367,10 @@ page {
 }
 
 .toast-error {
+  overflow-wrap: anywhere;
   position: fixed;
   right: 32rpx;
-  bottom: 158rpx;
+  bottom: calc(158rpx + env(safe-area-inset-bottom));
   left: 32rpx;
   z-index: 12;
   border-radius: 8rpx;

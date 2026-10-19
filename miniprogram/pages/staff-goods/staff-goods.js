@@ -98,7 +98,7 @@ Page({
     selectedStatusLabel: statusOptions[0].label,
     form: emptyForm(),
     submitTitle: '提交新增申请',
-    loading: false,
+    loading: true,
     saving: false,
     pendingGoodsRequest: null,
     error: ''

@@ -16,6 +16,12 @@
   align-items: flex-start;
 }
 
+.page-head > view:first-child {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
 .page-title {
   font-size: 40rpx;
   font-weight: 700;

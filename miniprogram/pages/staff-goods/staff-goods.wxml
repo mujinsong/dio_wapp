@@ -8,7 +8,7 @@
     <button class="refresh-button" loading="{{loading}}" bindtap="loadIdentity" aria-label="刷新">↻</button>
   </view>
 
-  <view wx:if="{{!hasStaffGroups}}" class="empty-panel">当前账号没有工作人员团体权限</view>
+  <view wx:if="{{!hasStaffGroups}}" class="empty-panel">{{loading ? '正在加载团队信息' : (error ? '加载失败，请刷新重试' : '当前账号没有工作人员团体权限')}}</view>
 
   <view wx:else>
     <view class="group-panel">

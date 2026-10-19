@@ -180,6 +180,7 @@
 .staff-row,
 .movement-row {
   display: flex;
+  flex-wrap: wrap;
   min-width: 0;
   padding: 24rpx;
   align-items: center;
@@ -196,7 +197,7 @@
 .staff-main,
 .movement-main {
   min-width: 0;
-  flex: 1;
+  flex: 1 1 320rpx;
 }
 
 .staff-name,
@@ -218,6 +219,7 @@
 }
 
 .staff-number {
+  overflow-wrap: anywhere;
   display: flex;
   max-width: 250rpx;
   flex-direction: column;
@@ -237,11 +239,13 @@
 
 .movement-title {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 12rpx;
 }
 
 .movement-type {
+  flex: 0 0 auto;
   padding: 3rpx 9rpx;
   border-radius: 4rpx;
   background: #eef2f7;
@@ -252,8 +256,10 @@
 }
 
 .movement-delta {
-  width: 86rpx;
-  flex: 0 0 86rpx;
+  max-width: 100%;
+  flex: 0 0 auto;
+  margin-left: auto;
+  overflow-wrap: anywhere;
   font-size: 29rpx;
   font-weight: 700;
   text-align: right;

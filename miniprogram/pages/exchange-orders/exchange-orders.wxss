@@ -133,6 +133,7 @@
 }
 
 .order-meta {
+  flex-wrap: wrap;
   margin-top: 18rpx;
   color: #344054;
   font-size: 25rpx;
@@ -140,11 +141,19 @@
 }
 
 .order-bottom {
+  flex-wrap: wrap;
   margin-top: 20rpx;
   border-top: 1rpx solid #edf0f4;
   padding-top: 20rpx;
   color: #8a94a5;
   font-size: 22rpx;
+}
+
+.order-meta text,
+.order-bottom text {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .error {

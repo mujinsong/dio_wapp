@@ -44,6 +44,11 @@
   padding: 30rpx;
 }
 
+.order-head > view:first-child {
+  min-width: 0;
+  flex: 1;
+}
+
 .eyebrow {
   color: #c04736;
   font-size: 21rpx;
@@ -51,6 +56,7 @@
 }
 
 .goods-name {
+  overflow-wrap: anywhere;
   margin-top: 8rpx;
   color: #172033;
   font-size: 36rpx;

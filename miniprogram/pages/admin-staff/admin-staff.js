@@ -53,7 +53,7 @@ Page({
     editingMemberStatus: 'normal',
     editingMemberUpdatedAt: '',
     submitTitle: '添加成员',
-    loading: false,
+    loading: true,
     saving: false,
     error: ''
   },

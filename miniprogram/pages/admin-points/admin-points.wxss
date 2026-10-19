@@ -279,3 +279,7 @@
   color: #b42318;
   font-size: 25rpx;
 }
+.target-name,
+.target-meta {
+  overflow-wrap: anywhere;
+}

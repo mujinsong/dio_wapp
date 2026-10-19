@@ -9,6 +9,12 @@
   gap: 20rpx;
 }
 
+.page-head > view:first-child {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
 .page-title {
   font-size: 40rpx;
   font-weight: 700;
@@ -218,7 +224,7 @@
 
 .payment-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 100rpx 150rpx;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.5fr);
   padding: 22rpx 24rpx;
   gap: 12rpx;
   border-bottom: 1rpx solid #edf0f5;
@@ -235,6 +241,11 @@
   color: #172033;
   font-weight: 650;
   text-align: right;
+}
+
+.payment-row text {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .record-head {

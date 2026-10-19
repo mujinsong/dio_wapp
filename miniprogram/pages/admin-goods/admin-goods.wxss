@@ -78,7 +78,11 @@
 
 .approval-count {
   display: flex;
-  width: 46rpx;
+  min-width: 46rpx;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 10rpx;
+  overflow-wrap: anywhere;
   height: 46rpx;
   align-items: center;
   justify-content: center;
@@ -102,19 +106,20 @@
 
 .approval-tab {
   display: flex;
-  height: 68rpx;
+  min-height: 68rpx;
+  flex-direction: column;
   min-width: 0;
   align-items: center;
   justify-content: center;
-  gap: 6rpx;
+  gap: 4rpx;
   margin: 0;
-  padding: 0 6rpx;
+  padding: 10rpx 6rpx;
   border-radius: 6rpx;
   background: transparent;
   color: #667085;
   font-size: 21rpx;
   font-weight: 800;
-  line-height: 68rpx;
+  line-height: 1.3;
 }
 
 .approval-tab::after {
@@ -127,6 +132,9 @@
 }
 
 .approval-tab-count {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   flex: 0 0 auto;
   font-size: 19rpx;
 }
@@ -163,8 +171,13 @@
 
 .two-cols {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18rpx;
+}
+
+.two-cols > view,
+.schedule-pickers > picker {
+  min-width: 0;
 }
 
 .label {
@@ -215,7 +228,7 @@
 
 .schedule-pickers {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18rpx;
   margin-top: 18rpx;
 }
@@ -409,6 +422,7 @@
 
 .approval-meta,
 .approval-description {
+  overflow-wrap: anywhere;
   margin-top: 10rpx;
   color: #7a8495;
   font-size: 22rpx;

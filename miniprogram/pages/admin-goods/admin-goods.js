@@ -153,7 +153,7 @@ Page({
     selectedStatusLabel: statusOptions[0].label,
     form: emptyGoodsForm(),
     submitTitle: '新增商品',
-    loading: false,
+    loading: true,
     saving: false,
     pendingAdminGoodsRequest: null,
     error: ''

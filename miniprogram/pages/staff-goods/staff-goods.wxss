@@ -11,7 +11,8 @@
 .section-title { color: #172033; font-size: 28rpx; font-weight: 900; }
 .section-note { margin-top: 7rpx; color: #7a8495; font-size: 22rpx; line-height: 1.4; }
 .field + .field { margin-top: 24rpx; }
-.two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18rpx; }
+.two-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18rpx; }
+.two-cols > view, .schedule-pickers > picker { min-width: 0; }
 .label { margin-bottom: 10rpx; color: #344054; font-size: 23rpx; font-weight: 800; }
 .picker-value, .input, .textarea { box-sizing: border-box; width: 100%; border: 1rpx solid #dde3ec; border-radius: 8rpx; background: #f9fafc; color: #172033; font-size: 27rpx; }
 .picker-value { display: flex; min-height: 82rpx; align-items: center; justify-content: space-between; gap: 16rpx; padding: 0 22rpx; }
@@ -24,7 +25,7 @@
 .schedule-copy { min-width: 0; flex: 1; }
 .schedule-copy .label { margin-bottom: 6rpx; }
 .schedule-note { color: #7a8495; font-size: 21rpx; line-height: 1.4; }
-.schedule-pickers { display: grid; grid-template-columns: 1fr 1fr; gap: 18rpx; margin-top: 18rpx; }
+.schedule-pickers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18rpx; margin-top: 18rpx; }
 .schedule-picker { min-height: 74rpx; font-size: 24rpx; }
 .form-actions { display: flex; flex-direction: column; gap: 16rpx; margin-top: 28rpx; }
 .form-action { box-sizing: border-box; display: flex; min-width: 0; height: 82rpx; align-items: center; justify-content: center; overflow: hidden; border-radius: 8rpx; padding: 0 16rpx; font-size: 27rpx; font-weight: 900; line-height: 1.2; text-align: center; white-space: nowrap; }

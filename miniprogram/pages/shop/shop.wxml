@@ -25,7 +25,8 @@
     </view>
   </scroll-view>
 
-  <view wx:if="{{showEmpty}}" class="empty-panel">
+  <view wx:if="{{loading && !hasGoods}}" class="empty-panel">正在加载商品</view>
+  <view wx:elif="{{showEmpty && !error}}" class="empty-panel">
     暂无可兑换商品
   </view>
 

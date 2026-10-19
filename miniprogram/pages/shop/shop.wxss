@@ -25,6 +25,7 @@
 }
 
 .refresh-button {
+  flex-shrink: 0;
   width: 72rpx;
   height: 72rpx;
   margin: 0;
@@ -214,12 +215,15 @@
 
 .goods-top {
   display: flex;
+  min-width: 0;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 16rpx;
+  gap: 8rpx;
 }
 
 .goods-name {
+  overflow-wrap: anywhere;
   min-width: 0;
   color: #172033;
   font-size: 30rpx;
@@ -228,6 +232,8 @@
 }
 
 .goods-price {
+  max-width: 100%;
+  overflow-wrap: anywhere;
   flex: 0 0 auto;
   color: #c04736;
   font-size: 24rpx;
@@ -253,6 +259,10 @@
 }
 
 .goods-meta text {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   border-radius: 6rpx;
   background: #f2f4f7;
   padding: 6rpx 10rpx;
@@ -273,7 +283,7 @@
 
 .exchange-button {
   height: 62rpx;
-  margin: auto 0 0;
+  margin: 16rpx 0 0;
   border-radius: 8rpx;
   background: #172033;
   color: #ffffff;
